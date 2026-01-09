@@ -68,7 +68,7 @@ const translations: Record<Language, Translations> = {
       title: '开启您的空间改造之旅',
       subtitle: '无论是单间改造还是整体设计，欢迎随时通过 WhatsApp 与我们联系。',
       whatsapp: 'WhatsApp 咨询',
-      footer: '© 2024 INTERIORS by HUI. All Rights Reserved.'
+      footer: '© 2026 INTERIORS by HUI. All Rights Reserved.'
     },
     ai: {
       title: 'Hui AI 助手',
@@ -118,7 +118,7 @@ const translations: Record<Language, Translations> = {
       title: 'Start Your Journey',
       subtitle: 'Whether it is a room renovation or a whole villa design, feel free to contact us via WhatsApp.',
       whatsapp: 'Chat on WhatsApp',
-      footer: '© 2024 INTERIORS by HUI. All Rights Reserved.'
+      footer: '© 2026 INTERIORS by HUI. All Rights Reserved.'
     },
     ai: {
       title: 'Hui AI Assistant',
