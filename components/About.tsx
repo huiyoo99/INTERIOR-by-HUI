@@ -7,7 +7,7 @@ const About: React.FC = () => {
   const stats = t.about.stats as { [key: string]: string };
 
   return (
-    <section id="about" className="py-24 bg-stone-100">
+    <section id="about" className="py-24 bg-stone-100 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center gap-16">
           {/* Image */}

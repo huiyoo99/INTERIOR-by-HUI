@@ -15,7 +15,7 @@ const Portfolio: React.FC = () => {
   }, [activeCategory]);
 
   return (
-    <section id="portfolio" className="py-24 bg-stone-50">
+    <section id="portfolio" className="py-24 bg-stone-50 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-serif text-stone-900 mb-4">{t.portfolio.title}</h2>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Contact: React.FC = () => {
@@ -9,7 +9,7 @@ const Contact: React.FC = () => {
   const whatsappLink = `https://wa.me/${whatsappNumber}`;
 
   return (
-    <section id="contact" className="py-24 bg-stone-900 text-stone-300">
+    <section id="contact" className="py-24 bg-stone-900 text-stone-300 scroll-mt-28">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <h2 className="text-3xl font-serif text-white mb-4">{t.contact.title}</h2>
         <p className="text-stone-400 mb-12 font-light max-w-2xl mx-auto">
