@@ -6,8 +6,20 @@ interface Translations {
   hero: { [key: string]: string };
   about: { [key: string]: string | { [key: string]: string } };
   portfolio: { title: string; categories: { [key: string]: string } };
-  contact: { [key: string]: string | { [key: string]: string } };
-  ai: { [key: string]: string };
+  contact: {
+    title: string;
+    subtitle: string;
+    whatsapp: string;
+    footer: string;
+  };
+  ai: {
+    title: string;
+    subtitle: string;
+    welcome: string;
+    error: string;
+    placeholder: string;
+    disclaimer: string;
+  };
 }
 
 interface LanguageContextType {
@@ -54,22 +66,17 @@ const translations: Record<Language, Translations> = {
     },
     contact: {
       title: '开启您的空间改造之旅',
-      subtitle: '无论是一个房间的改造，还是整栋别墅的设计，我们都期待听到您的想法。',
-      form: {
-        name: '姓名',
-        email: '邮箱',
-        message: '留言',
-        submit: '发送咨询',
-      },
+      subtitle: '无论是单间改造还是整体设计，欢迎随时通过 WhatsApp 与我们联系。',
+      whatsapp: 'WhatsApp 咨询',
       footer: '© 2024 INTERIORS by HUI. All Rights Reserved.'
     },
     ai: {
       title: 'Hui AI 助手',
-      subtitle: '在线设计咨询',
-      placeholder: '询问关于极简风格的建议...',
-      disclaimer: 'AI 建议仅供参考，具体施工请咨询专业人士。',
-      welcome: '您好！我是您的专属 AI 设计顾问 Hui。想聊聊您的新家装修灵感，或者需要一些色彩搭配的建议吗？',
-      error: '抱歉，我现在遇到一点小问题，请稍后再试。',
+      subtitle: '您的专属设计顾问',
+      welcome: '你好！我是Hui，很高兴为您服务。关于室内设计，您有什么想了解的吗？',
+      error: '抱歉，网络似乎开了小差。请稍后再试。',
+      placeholder: '请输入您的问题...',
+      disclaimer: 'AI 建议仅供参考，具体实施请咨询专业人士。',
     }
   },
   en: {
@@ -109,22 +116,17 @@ const translations: Record<Language, Translations> = {
     },
     contact: {
       title: 'Start Your Journey',
-      subtitle: 'Whether it is a room renovation or a whole villa design, we look forward to hearing your ideas.',
-      form: {
-        name: 'Name',
-        email: 'Email',
-        message: 'Message',
-        submit: 'Send Inquiry',
-      },
+      subtitle: 'Whether it is a room renovation or a whole villa design, feel free to contact us via WhatsApp.',
+      whatsapp: 'Chat on WhatsApp',
       footer: '© 2024 INTERIORS by HUI. All Rights Reserved.'
     },
     ai: {
       title: 'Hui AI Assistant',
-      subtitle: 'Online Design Consultation',
-      placeholder: 'Ask for advice on minimalist style...',
-      disclaimer: 'AI suggestions are for reference only. Please consult professionals.',
-      welcome: 'Hello! I am Hui, your AI design consultant. Want to talk about inspiration for your new home or need color advice?',
-      error: 'Sorry, I am encountering a small problem right now, please try again later.',
+      subtitle: 'Your Personal Design Consultant',
+      welcome: 'Hello! I am Hui, happy to help. What would you like to know about interior design?',
+      error: 'Sorry, I encountered an error. Please try again later.',
+      placeholder: 'Ask a question...',
+      disclaimer: 'AI advice is for reference only. Consult professionals for implementation.',
     }
   }
 };

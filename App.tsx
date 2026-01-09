@@ -18,8 +18,6 @@ function App() {
           <Portfolio />
           <Contact />
         </main>
-        
-        {/* The AI Assistant floats above content */}
         <AIChat />
       </div>
     </LanguageProvider>
