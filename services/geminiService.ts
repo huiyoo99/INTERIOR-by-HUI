@@ -1,9 +1,26 @@
 import { GoogleGenAI } from "@google/genai";
 import { Language } from "../types";
 
-// Initialize Gemini Client
+// Initialize Gemini Client Lazily
 // IMPORTANT: The API key is assumed to be available in process.env.API_KEY
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+let ai: GoogleGenAI | null = null;
+
+const getAiClient = () => {
+  if (ai) return ai;
+
+  const apiKey = process.env.API_KEY;
+  console.log('GeminiService: Initializing client with key length:', apiKey?.length);
+
+  if (!apiKey) {
+    console.warn("GeminiService: API Key is missing!");
+    // Return null or throw custom error depending on desired behavior. 
+    // For now, let's throw to make it visible if called.
+    throw new Error("Gemini API Key is missing via process.env.API_KEY");
+  }
+
+  ai = new GoogleGenAI({ apiKey });
+  return ai;
+};
 
 export const streamDesignAdvice = async (
   prompt: string,
@@ -11,8 +28,9 @@ export const streamDesignAdvice = async (
   onChunk: (text: string) => void
 ): Promise<void> => {
   try {
-    const model = 'gemini-3-flash-preview'; // Good balance of speed and capability for chat
-    
+    const client = getAiClient();
+    const model = 'gemini-2.0-flash-exp'; // Updated model name if needed, using flash
+
     // System instruction to guide the persona
     const systemInstructions = {
       zh: `
@@ -41,11 +59,11 @@ export const streamDesignAdvice = async (
       `
     };
 
-    const chat = ai.chats.create({
+    const chat = client.chats.create({
       model: model,
       config: {
         systemInstruction: systemInstructions[language],
-        temperature: 0.7, 
+        temperature: 0.7,
       }
     });
 
