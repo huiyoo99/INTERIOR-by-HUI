@@ -46,7 +46,7 @@ const translations: Record<Language, Translations> = {
     about: {
       title: '关于设计师',
       name: 'Hui',
-      p1: '从事室内设计行业已有十年。我认为设计不仅仅是视觉上的享受，更是关于如何生活的一种哲学。我的设计理念源于“少即是多”，致力于通过简洁的线条和天然的材质，构建出具有治愈力量的空间。',
+      p1: '从事室内设计行业已有三年。我认为设计不仅仅是视觉上的享受，更是关于如何生活的一种哲学。我的设计理念源于“少即是多”，致力于通过简洁的线条和天然的材质，构建出具有治愈力量的空间。',
       p2: '无论是私人住宅还是商业空间，我都会深入了解客户的需求与故事，将他们的个性融入每一个细节之中。',
       stats: {
         experience: '年经验',
@@ -96,7 +96,7 @@ const translations: Record<Language, Translations> = {
     about: {
       title: 'About The Designer',
       name: 'Hui',
-      p1: 'With ten years in the interior design industry, I believe design is not just visual enjoyment, but a philosophy of life. My philosophy stems from "Less is More", dedicated to building healing spaces through simple lines and natural materials.',
+      p1: 'With three years in the interior design industry, I believe design is not just visual enjoyment, but a philosophy of life. My philosophy stems from "Less is More", dedicated to building healing spaces through simple lines and natural materials.',
       p2: 'Whether it is a private residence or a commercial space, I delve deep into the client\'s needs and stories, integrating their personality into every detail.',
       stats: {
         experience: 'Years Exp',

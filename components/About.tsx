@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import profileImage from '../assets/profile.jpg';
 
 const About: React.FC = () => {
   const { t } = useLanguage();
@@ -12,12 +13,12 @@ const About: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center gap-16">
           {/* Image */}
           <div className="w-full md:w-1/2 relative">
-             <div className="absolute top-4 left-4 w-full h-full border-2 border-stone-300 z-0"></div>
-             <img 
-               src="https://picsum.photos/id/64/800/1000" 
-               alt="Designer Portrait" 
-               className="w-full h-auto relative z-10 shadow-lg grayscale hover:grayscale-0 transition-all duration-700"
-             />
+            <div className="absolute top-4 left-4 w-full h-full border-2 border-stone-300 z-0"></div>
+            <img
+              src={profileImage}
+              alt="Designer Portrait"
+              className="w-full h-auto relative z-10 shadow-lg grayscale hover:grayscale-0 transition-all duration-700"
+            />
           </div>
 
           {/* Text */}
@@ -28,19 +29,15 @@ const About: React.FC = () => {
               <p>{t.about.p1 as string}</p>
               <p>{t.about.p2 as string}</p>
             </div>
-            
+
             <div className="mt-10 flex gap-8">
               <div>
-                <span className="block text-3xl font-serif text-stone-900">10+</span>
+                <span className="block text-3xl font-serif text-stone-900">3+</span>
                 <span className="text-sm text-stone-500 uppercase tracking-wider">{stats.experience}</span>
               </div>
               <div>
-                <span className="block text-3xl font-serif text-stone-900">50+</span>
+                <span className="block text-3xl font-serif text-stone-900">40+</span>
                 <span className="text-sm text-stone-500 uppercase tracking-wider">{stats.delivered}</span>
-              </div>
-              <div>
-                <span className="block text-3xl font-serif text-stone-900">5</span>
-                <span className="text-sm text-stone-500 uppercase tracking-wider">{stats.awards}</span>
               </div>
             </div>
           </div>
