@@ -16,6 +16,7 @@ export interface Project {
   image: string;
   descriptionZh: string;
   descriptionEn: string;
+  behanceUrl?: string;
 }
 
 export interface ChatMessage {
