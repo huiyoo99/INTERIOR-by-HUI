@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import profileImage from '../assets/profile.jpg';
+import profileImage from '../assets/profile.jpeg';
 
 const About: React.FC = () => {
   const { t } = useLanguage();

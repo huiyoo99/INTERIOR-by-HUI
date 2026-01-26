@@ -11,7 +11,7 @@ const Portfolio: React.FC = () => {
     if (activeCategory === ProjectCategory.ALL) {
       return PROJECTS;
     }
-    return PROJECTS.filter(p => p.category === activeCategory);
+    return PROJECTS.filter(p => p.category.includes(activeCategory));
   }, [activeCategory]);
 
   return (
@@ -70,7 +70,7 @@ const Portfolio: React.FC = () => {
                   {language === 'zh' ? project.titleZh : project.titleEn}
                 </h3>
                 <p className="text-stone-500 text-xs mt-1">
-                  {t.portfolio.categories[project.category]}
+                  {project.category.map(cat => t.portfolio.categories[cat]).join(" | ")}
                 </p>
               </div>
             </a>

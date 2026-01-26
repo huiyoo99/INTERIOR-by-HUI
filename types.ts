@@ -12,7 +12,7 @@ export interface Project {
   id: number;
   titleZh: string;
   titleEn: string;
-  category: ProjectCategory;
+  category: ProjectCategory[];
   image: string;
   descriptionZh: string;
   descriptionEn: string;
