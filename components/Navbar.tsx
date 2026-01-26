@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
   const { t, language, setLanguage } = useLanguage();
 
   const navLinks = [
-    { name: t.nav.home, href: '/INTERIOR-by-HUI-2/' },
+    { name: t.nav.home, href: '/INTERIOR-by-HUI/' },
     { name: t.nav.about, href: '#about' },
     { name: t.nav.portfolio, href: '#portfolio' },
     { name: t.nav.contact, href: '#contact' },
