@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 
 const Navbar: React.FC = () => {
@@ -7,7 +8,7 @@ const Navbar: React.FC = () => {
   const { t, language, setLanguage } = useLanguage();
 
   const navLinks = [
-    { name: t.nav.home, href: '#home' },
+    { name: t.nav.home, href: '/INTERIOR-by-HUI-2/' },
     { name: t.nav.about, href: '#about' },
     { name: t.nav.portfolio, href: '#portfolio' },
     { name: t.nav.contact, href: '#contact' },
@@ -29,9 +30,9 @@ const Navbar: React.FC = () => {
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-stone-50/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <a href="#home" className="text-xl md:text-2xl font-serif font-bold tracking-wider text-stone-900 flex items-center gap-2">
+        <Link to="/" className="text-xl md:text-2xl font-serif font-bold tracking-wider text-stone-900 flex items-center gap-2">
           INTERIORS <span className="text-sm font-light tracking-widest mt-1">by HUI</span>
-        </a>
+        </Link>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center space-x-10">
@@ -44,9 +45,9 @@ const Navbar: React.FC = () => {
               {link.name}
             </a>
           ))}
-          
+
           {/* Language Switcher */}
-          <button 
+          <button
             onClick={toggleLanguage}
             className="text-sm font-medium text-stone-800 border border-stone-300 rounded-full px-3 py-1 hover:bg-stone-200 transition-colors"
           >
@@ -56,7 +57,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center space-x-4">
-          <button 
+          <button
             onClick={toggleLanguage}
             className="text-sm font-medium text-stone-800 border border-stone-300 rounded-full px-3 py-1"
           >

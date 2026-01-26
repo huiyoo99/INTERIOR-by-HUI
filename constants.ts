@@ -3,6 +3,13 @@ import img1 from './assets/1.jpg';
 import img2 from './assets/2.jpg';
 import img3 from './assets/3.jpg';
 import img4 from './assets/4.jpg';
+import p5_1 from './assets/project5/p5_1.jpg';
+import p5_2 from './assets/project5/p5_2.jpg';
+import p5_3 from './assets/project5/p5_3.jpg';
+import p5_4 from './assets/project5/p5_4.jpg';
+import p5_5 from './assets/project5/p5_5.jpg';
+import p5_6 from './assets/project5/p5_6.jpg';
+import p5_7 from './assets/project5/p5_7.jpg';
 
 export const PROJECTS: Project[] = [
   {
@@ -47,12 +54,13 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 5,
-    titleZh: "现代南洋叙事",
-    titleEn: "A Contemporary Nanyang Story",
-    category: [ProjectCategory.COMMERCIAL],
-    image: img4,
-    descriptionZh: "在干练的工业建筑框架内，重塑马来西亚茶室的灵魂本质。",
-    descriptionEn: "Reimagining the soulful essence of the Malaysian Kopitiam within a sleek, industrial architectural framework.",
-    behanceUrl: "https://www.behance.net/gallery/241980847/NANYANG-KOPITIAM"
+    titleZh: "住宅新境",
+    titleEn: "Reimagining Home",
+    category: [ProjectCategory.RESIDENTIAL],
+    image: p5_1,
+    descriptionZh: "在这个住宅项目中，我们探讨了空间、光影与生活方式的平衡。通过大面积的留白与精致的材质触感，营造出一个静谧而充满力量的居住空间。",
+    descriptionEn: "In this residential project, we explore the balance of space, light, and lifestyle. Through expansive voids and refined textures, we create a serene yet powerful living environment.",
+    behanceUrl: "project/5",
+    gallery: [p5_1, p5_2, p5_3, p5_4, p5_5, p5_6, p5_7]
   },
 ];
