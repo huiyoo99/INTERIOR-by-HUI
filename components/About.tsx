@@ -6,6 +6,7 @@ const About: React.FC = () => {
   const { t } = useLanguage();
   // Helper for type safety accessing nested stats object
   const stats = t.about.stats as { [key: string]: string };
+  const imageRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -17,7 +18,29 @@ const About: React.FC = () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('#about .reveal').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
+
+    // Separate observer for image color transition
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const img = entry.target.querySelector('img');
+        if (img) {
+          if (entry.isIntersecting) {
+            img.classList.remove('grayscale');
+          } else {
+            img.classList.add('grayscale');
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // Trigger when 50% visible
+
+    if (imageRef.current) {
+      imageObserver.observe(imageRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      imageObserver.disconnect();
+    };
   }, []);
 
   return (
@@ -25,12 +48,12 @@ const About: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center gap-16">
           {/* Image */}
-          <div className="w-full md:w-1/2 relative reveal reveal-fade-in">
+          <div ref={imageRef} className="w-full md:w-1/2 relative reveal reveal-fade-in">
             <div className="absolute top-4 left-4 w-full h-full border-2 border-stone-300 z-0"></div>
             <img
               src={profileImage}
               alt="Designer Portrait"
-              className="w-full h-auto relative z-10 shadow-lg grayscale hover:grayscale-0 transition-all duration-700"
+              className="w-full h-auto relative z-10 shadow-lg grayscale transition-all duration-[2500ms] ease-out"
             />
           </div>
 

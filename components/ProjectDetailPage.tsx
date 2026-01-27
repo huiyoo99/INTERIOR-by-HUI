@@ -115,7 +115,7 @@ const ProjectDetailPage: React.FC = () => {
                                 </div>
                                 <div>
                                     <h3 className="text-[10px] uppercase tracking-widest text-stone-400 mb-2 font-bold">Style</h3>
-                                    <p className="text-stone-900 text-xs font-medium uppercase tracking-wider">Minimalist</p>
+                                    <p className="text-stone-900 text-xs font-medium uppercase tracking-wider">European</p>
                                 </div>
                             </div>
                         </div>
@@ -133,9 +133,17 @@ const ProjectDetailPage: React.FC = () => {
                             <img src={project.gallery?.[1]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="" />
                         </div>
                         <div className="md:col-span-4 reveal reveal-slide-left delay-400">
-                            <h3 className="text-2xl font-serif mb-4 italic text-stone-400">Atmosphere</h3>
+                            <h3 className="text-2xl font-serif mb-4 italic text-stone-400">
+                                {language === 'zh'
+                                    ? "氛围"
+                                    : "Atmosphere"}
+                            </h3>
                             <div className="w-12 h-[1px] bg-stone-200 mb-6"></div>
-                            <p className="text-stone-500 text-sm italic font-light">The subtle interplay of natural light and tactile surfaces.</p>
+                            <p className="text-stone-500 text-sm italic font-light">
+                                {language === 'zh'
+                                    ? "自然光线与触感表面的微妙互动。"
+                                    : "The subtle interplay of natural light and tactile surfaces."}
+                            </p>
                         </div>
                     </div>
 
@@ -151,11 +159,19 @@ const ProjectDetailPage: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
                         <div className="reveal reveal-slide-up pt-24">
                             <img src={project.gallery?.[3]} className="w-full h-auto shadow-xl" alt="" />
-                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 text-right font-bold">Spatial Fluidity</p>
+                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 text-right font-bold">
+                                {language === 'zh'
+                                    ? "空间流动性"
+                                    : "Spatial Fluidity"}
+                            </p>
                         </div>
                         <div className="reveal reveal-slide-up delay-300">
                             <img src={project.gallery?.[4]} className="w-full h-auto shadow-xl" alt="" />
-                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 font-bold">Tactile Detail</p>
+                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 font-bold">
+                                {language === 'zh'
+                                    ? "触感细节"
+                                    : "Tactile Detail"}
+                            </p>
                         </div>
                     </div>
 
@@ -168,7 +184,11 @@ const ProjectDetailPage: React.FC = () => {
                             <div className="aspect-[4/5] overflow-hidden">
                                 <img src={project.gallery?.[6]} className="w-full h-full object-cover" alt="" />
                             </div>
-                            <p className="mt-6 text-[10px] uppercase tracking-widest text-stone-300">Compositional Balance</p>
+                            <p className="mt-6 text-[10px] uppercase tracking-widest text-stone-300">
+                                {language === 'zh'
+                                    ? "构图平衡"
+                                    : "Compositional Balance"}
+                            </p>
                         </div>
                     </div>
 
@@ -181,9 +201,15 @@ const ProjectDetailPage: React.FC = () => {
                         />
                         <div className="absolute inset-0 flex items-center justify-center p-12">
                             <div className="border border-white/20 backdrop-blur-md bg-white/10 p-12 max-w-2xl text-center text-white reveal reveal-blur-in">
-                                <h4 className="text-3xl font-serif mb-6">Ending Note</h4>
+                                <h4 className="text-3xl font-serif mb-6">
+                                    {language === 'zh'
+                                        ? "结语"
+                                        : "Ending Note"}
+                                </h4>
                                 <p className="text-sm font-light leading-relaxed text-white/80">
-                                    Design is not just what it looks like and feels like. Design is how it works and how it makes you feel within the silence of a space.
+                                    {language === 'zh'
+                                        ? "设计不仅仅是感觉。设计是关于如何运作，以及如何在空间的寂静中让你感到共鸣。"
+                                        : "Design is not just what it looks like and feels like. Design is how it works and how it makes you feel within the silence of a space."}
                                 </p>
                             </div>
                         </div>
@@ -196,16 +222,32 @@ const ProjectDetailPage: React.FC = () => {
             <section className="py-32 bg-stone-900 overflow-hidden relative">
                 <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-white opacity-[0.02] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                 <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-                    <span className="text-white/30 text-[10px] uppercase tracking-[1em] mb-12 block">Next Chapter</span>
-                    <h2 className="text-5xl md:text-7xl font-serif text-white mb-20 leading-tight">Elevate your living experience.</h2>
+                    <span className="text-white/30 text-[10px] uppercase tracking-[1em] mb-12 block">
+                        {language === 'zh'
+                            ? "Next Chapter"
+                            : "Next Chapter"}
+                    </span>
+                    <h2 className="text-5xl md:text-7xl font-serif text-white mb-20 leading-tight">
+                        {language === 'zh'
+                            ? "提升您的生活体验。"
+                            : "Elevate your living experience."}
+                    </h2>
 
                     <div className="flex flex-col md:flex-row items-center justify-center gap-12">
                         <Link
                             to="/"
                             className="text-white group relative pb-2 overflow-hidden block"
                         >
-                            <span className="uppercase tracking-[0.4em] text-xs font-bold inline-block transform group-hover:-translate-y-full transition-transform duration-500">Back to Index</span>
-                            <span className="uppercase tracking-[0.4em] text-xs font-bold absolute bottom-2 left-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 text-stone-400">Back to Index</span>
+                            <span className="uppercase tracking-[0.4em] text-xs font-bold inline-block transform group-hover:-translate-y-full transition-transform duration-500">
+                                {language === 'zh'
+                                    ? "返回首页"
+                                    : "Back to Index"}
+                            </span>
+                            <span className="uppercase tracking-[0.4em] text-xs font-bold absolute bottom-2 left-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 text-stone-400">
+                                {language === 'zh'
+                                    ? "返回首页"
+                                    : "Back to Index"}
+                            </span>
                             <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                         </Link>
 
@@ -213,7 +255,9 @@ const ProjectDetailPage: React.FC = () => {
                             href="#contact"
                             className="px-10 py-5 border border-white/20 text-white rounded-full hover:bg-white hover:text-stone-900 transition-all duration-500 uppercase tracking-widest text-[10px] font-bold"
                         >
-                            Start Collaboration
+                            {language === 'zh'
+                                ? "开始合作"
+                                : "Start Collaboration"}
                         </a>
                     </div>
                 </div>

@@ -59,14 +59,16 @@ const Portfolio: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project: Project, index: number) => {
             const isInternal = project.behanceUrl?.startsWith('project/');
-            const delayClass = `delay-${(index % 3 + 1) * 100}`; // Stagger effect based on column position
+            // Using inline style for delay to ensure it's not purged by Tailwind in production
+            const delay = `${(index % 3 + 1) * 100}ms`;
 
             if (isInternal) {
               return (
                 <Link
                   key={project.id}
                   to={`/${project.behanceUrl}`}
-                  className={`group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block reveal reveal-slide-up ${delayClass}`}
+                  className="group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block reveal reveal-slide-up"
+                  style={{ transitionDelay: delay }}
                 >
                   <PortfolioItemContent project={project} language={language} t={t} />
                 </Link>
@@ -79,7 +81,8 @@ const Portfolio: React.FC = () => {
                 href={project.behanceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block reveal reveal-slide-up ${delayClass}`}
+                className="group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block reveal reveal-slide-up"
+                style={{ transitionDelay: delay }}
               >
                 <PortfolioItemContent project={project} language={language} t={t} />
               </a>
