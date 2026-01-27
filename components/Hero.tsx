@@ -3,17 +3,108 @@ import { useLanguage } from '../context/LanguageContext';
 
 const Hero: React.FC = () => {
   const { t } = useLanguage();
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const [images, setImages] = React.useState<HTMLImageElement[]>([]);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  // Preload images
+  React.useEffect(() => {
+    const loadImages = async () => {
+      const loadedImages: HTMLImageElement[] = [];
+      const imageCount = 80;
+      const promises = [];
+
+      for (let i = 0; i < imageCount; i++) {
+        const promise = new Promise<void>((resolve) => {
+          const img = new Image();
+          // Format number with leading zeros (000, 001, ..., 079)
+          const num = i.toString().padStart(3, '0');
+          // Using the specific filename pattern found in the directory
+          img.src = new URL(`../assets/main/kling_20260128_VIDEO_Image1Stat_2_0_${num}.jpg`, import.meta.url).href;
+          img.onload = () => {
+            loadedImages[i] = img;
+            resolve();
+          };
+        });
+        promises.push(promise);
+      }
+
+      await Promise.all(promises);
+      setImages(loadedImages);
+      setIsLoaded(true);
+    };
+
+    loadImages();
+  }, []);
+
+  // Animation Loop
+  React.useEffect(() => {
+    if (!isLoaded || !canvasRef.current || images.length === 0) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let currentIndex = 0;
+    let lastTime = 0;
+    const fps = 24; // Target FPS
+    const interval = 1000 / fps;
+
+    const render = (time: number) => {
+      if (time - lastTime > interval) {
+        lastTime = time;
+        const img = images[currentIndex];
+
+        // Draw image effectively "object-cover" style
+        if (img) {
+          const canvasAspect = canvas.width / canvas.height;
+          const imgAspect = img.width / img.height;
+          let drawWidth, drawHeight, offsetX, offsetY;
+
+          if (canvasAspect > imgAspect) {
+            drawWidth = canvas.width;
+            drawHeight = canvas.width / imgAspect;
+            offsetX = 0;
+            offsetY = (canvas.height - drawHeight) / 2;
+          } else {
+            drawHeight = canvas.height;
+            drawWidth = canvas.height * imgAspect;
+            offsetX = (canvas.width - drawWidth) / 2;
+            offsetY = 0;
+          }
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+        }
+
+        currentIndex = (currentIndex + 1) % images.length;
+      }
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    // Handle Resize
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial size
+
+    animationFrameId = requestAnimationFrame(render);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isLoaded, images]);
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* Canvas Background */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://picsum.photos/id/201/1920/1080?grayscale"
-          alt="Interior Design Studio"
-          className="w-full h-full object-cover object-center opacity-90 animate-subtle-zoom"
-        />
-        <div className="absolute inset-0 bg-black/20"></div>
+        <canvas ref={canvasRef} className="w-full h-full block opacity-90" />
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
 
       {/* Content */}

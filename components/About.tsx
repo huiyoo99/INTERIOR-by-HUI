@@ -53,7 +53,7 @@ const About: React.FC = () => {
             <img
               src={profileImage}
               alt="Designer Portrait"
-              className="w-full h-auto relative z-10 shadow-lg grayscale transition-all duration-[2500ms] ease-out"
+              className="w-full h-auto relative z-10 shadow-lg grayscale transition-all duration-[3500ms] ease-out"
             />
           </div>
 

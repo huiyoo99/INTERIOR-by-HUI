@@ -30,8 +30,8 @@ const Navbar: React.FC = () => {
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-stone-50/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-xl md:text-2xl font-serif font-bold tracking-wider text-stone-900 flex items-center gap-2">
-          INTERIORS <span className="text-sm font-light tracking-widest mt-1">by HUI</span>
+        <Link to="/" className={`text-xl md:text-2xl font-serif font-bold tracking-wider flex items-center gap-2 transition-colors ${isScrolled ? 'text-stone-900' : 'text-white'}`}>
+          INTERIORS <span className={`text-sm font-light tracking-widest mt-1 ${isScrolled ? 'text-stone-900' : 'text-stone-200'}`}>by HUI</span>
         </Link>
 
         {/* Desktop Links */}
@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm uppercase tracking-widest text-stone-600 hover:text-stone-900 transition-colors"
+              className={`text-sm uppercase tracking-widest transition-colors ${isScrolled ? 'text-stone-600 hover:text-stone-900' : 'text-stone-200 hover:text-white'}`}
             >
               {link.name}
             </a>
@@ -49,22 +49,22 @@ const Navbar: React.FC = () => {
           {/* Language Switcher */}
           <button
             onClick={toggleLanguage}
-            className="text-sm font-medium text-stone-800 border border-stone-300 rounded-full px-3 py-1 hover:bg-stone-200 transition-colors"
+            className={`text-sm font-medium border rounded-full px-3 py-1 transition-colors ${isScrolled ? 'text-stone-800 border-stone-300 hover:bg-stone-200' : 'text-white border-white/30 hover:bg-white/10'}`}
           >
             {language === 'zh' ? 'EN' : '中'}
           </button>
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center space-x-4">
+        <div className={`md:hidden flex items-center space-x-4 ${isScrolled ? 'text-stone-800' : 'text-white'}`}>
           <button
             onClick={toggleLanguage}
-            className="text-sm font-medium text-stone-800 border border-stone-300 rounded-full px-3 py-1"
+            className={`text-sm font-medium border rounded-full px-3 py-1 ${isScrolled ? 'border-stone-300' : 'border-white/30'}`}
           >
             {language === 'zh' ? 'EN' : '中'}
           </button>
           <button
-            className="text-stone-800 focus:outline-none"
+            className="focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <i className={`fas ${mobileMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
