@@ -46,8 +46,8 @@ const translations: Record<Language, Translations> = {
     about: {
       title: '关于设计师',
       name: 'Hui',
-      p1: '从事室内设计行业已有三年。我认为设计不仅仅是视觉上的享受，更是关于如何生活的一种哲学。我的设计理念源于“少即是多”，致力于通过简洁的线条和天然的材质，构建出具有治愈力量的空间。',
-      p2: '无论是私人住宅还是商业空间，我都会深入了解客户的需求与故事，将他们的个性融入每一个细节之中。',
+      p1: '在三年的职业生涯中，我始终坚持“设计应随时代而进化”。我喜欢在经典的美学框架中融入最前沿的设计元素，让空间既有深度又不失新鲜感。',
+      p2: '我擅长挑战不同的风格边界，通过新颖的软装搭配和创新的动线规划，为客户创造出超越预期的居住体验。保持好奇，勇于不同，这是我的设计准则。',
       stats: {
         experience: '年经验',
         delivered: '完美交付',
@@ -96,8 +96,8 @@ const translations: Record<Language, Translations> = {
     about: {
       title: 'About The Designer',
       name: 'Hui',
-      p1: 'With three years in the interior design industry, I believe design is not just visual enjoyment, but a philosophy of life. My philosophy stems from "Less is More", dedicated to building healing spaces through simple lines and natural materials.',
-      p2: 'Whether it is a private residence or a commercial space, I delve deep into the client\'s needs and stories, integrating their personality into every detail.',
+      p1: 'Throughout my three-year career, I’ve stayed true to one belief: Design must evolve. My work blends timeless aesthetic principles with cutting-edge elements, ensuring every space feels both grounded and excitingly new.',
+      p2: 'I specialize in challenging stylistic boundaries—using innovative materials and creative layouts to exceed expectations. Staying curious and daring to be different are the hallmarks of my practice.',
       stats: {
         experience: 'Years Exp',
         delivered: 'Delivered',
