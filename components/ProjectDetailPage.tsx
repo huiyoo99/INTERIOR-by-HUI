@@ -85,7 +85,7 @@ const ProjectDetailPage: React.FC = () => {
             </section>
 
             {/* Intro Narrative Section */}
-            <section className="py-32 md:py-48 px-6 bg-white">
+            <section className="py-20 md:py-32 px-6 bg-white">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 items-center">
                     <div className="lg:col-span-1 hidden lg:block">
                         <span className="text-stone-200 text-9xl font-serif select-none vertical-text rotate-180 transform -translate-x-12 opacity-50">
@@ -124,8 +124,8 @@ const ProjectDetailPage: React.FC = () => {
             </section>
 
             {/* Artistic Gallery - Asymmetric Layout */}
-            <section className="pb-32 bg-white">
-                <div className="max-w-screen-2xl mx-auto px-4 md:px-12 flex flex-col gap-32 md:gap-64">
+            <section className="pb-20 bg-white">
+                <div className="max-w-screen-2xl mx-auto px-4 md:px-12 flex flex-col gap-20 md:gap-32">
 
                     {/* Gallery Item 1 - Wide Staggered */}
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal reveal-parallax group">
@@ -148,7 +148,7 @@ const ProjectDetailPage: React.FC = () => {
                     </div>
 
                     {/* Gallery Item 3 & 4 - Staggered Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 items-start">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
                         <div className="reveal reveal-slide-up pt-24">
                             <img src={project.gallery?.[3]} className="w-full h-auto shadow-xl" alt="" />
                             <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 text-right font-bold">Spatial Fluidity</p>
@@ -160,7 +160,7 @@ const ProjectDetailPage: React.FC = () => {
                     </div>
 
                     {/* New Artistic Multi-Image Row (5 & 6) */}
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
                         <div className="md:col-span-5 reveal reveal-slide-up">
                             <img src={project.gallery?.[5]} className="w-full h-auto" alt="" />
                         </div>
@@ -173,7 +173,7 @@ const ProjectDetailPage: React.FC = () => {
                     </div>
 
                     {/* Gallery Item 7 - Final Impact */}
-                    <div className="w-full h-[120vh] relative reveal reveal-fade-in group">
+                    <div className="w-full h-[90vh] relative reveal reveal-fade-in group">
                         <img
                             src={project.gallery?.[0]}
                             className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
@@ -193,7 +193,7 @@ const ProjectDetailPage: React.FC = () => {
             </section>
 
             {/* High-End Conclusion */}
-            <section className="py-48 bg-stone-900 overflow-hidden relative">
+            <section className="py-32 bg-stone-900 overflow-hidden relative">
                 <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-white opacity-[0.02] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                 <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
                     <span className="text-white/30 text-[10px] uppercase tracking-[1em] mb-12 block">Next Chapter</span>

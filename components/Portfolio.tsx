@@ -15,6 +15,23 @@ const Portfolio: React.FC = () => {
     return PROJECTS.filter(p => p.category.includes(activeCategory));
   }, [activeCategory]);
 
+  React.useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Slight delay to allow DOM update
+    setTimeout(() => {
+      document.querySelectorAll('#portfolio .reveal').forEach(el => observer.observe(el));
+    }, 100);
+
+    return () => observer.disconnect();
+  }, [filteredProjects, activeCategory]);
+
   return (
     <section id="portfolio" className="py-24 bg-stone-50 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6">
@@ -40,15 +57,16 @@ const Portfolio: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project: Project) => {
+          {filteredProjects.map((project: Project, index: number) => {
             const isInternal = project.behanceUrl?.startsWith('project/');
+            const delayClass = `delay-${(index % 3 + 1) * 100}`; // Stagger effect based on column position
 
             if (isInternal) {
               return (
                 <Link
                   key={project.id}
                   to={`/${project.behanceUrl}`}
-                  className="group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block"
+                  className={`group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block reveal reveal-slide-up ${delayClass}`}
                 >
                   <PortfolioItemContent project={project} language={language} t={t} />
                 </Link>
@@ -61,7 +79,7 @@ const Portfolio: React.FC = () => {
                 href={project.behanceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block"
+                className={`group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block reveal reveal-slide-up ${delayClass}`}
               >
                 <PortfolioItemContent project={project} language={language} t={t} />
               </a>
