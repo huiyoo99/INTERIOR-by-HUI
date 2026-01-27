@@ -33,11 +33,11 @@ const Portfolio: React.FC = () => {
   }, [filteredProjects, activeCategory]);
 
   return (
-    <section id="portfolio" className="py-24 bg-stone-50 scroll-mt-28">
+    <section id="portfolio" className="py-24 bg-stone-50 dark:bg-stone-950 transition-colors duration-300 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-serif text-stone-900 mb-4">{t.portfolio.title}</h2>
-          <div className="w-24 h-1 bg-stone-300 mx-auto"></div>
+          <h2 className="text-4xl font-serif text-stone-900 dark:text-stone-100 mb-4">{t.portfolio.title}</h2>
+          <div className="w-24 h-1 bg-stone-300 dark:bg-stone-700 mx-auto"></div>
         </div>
 
         {/* Filters */}
@@ -47,8 +47,8 @@ const Portfolio: React.FC = () => {
               key={category}
               onClick={() => setActiveCategory(category)}
               className={`text-sm uppercase tracking-widest px-4 py-2 transition-colors ${activeCategory === category
-                ? 'text-stone-900 border-b border-stone-900'
-                : 'text-stone-400 hover:text-stone-600'
+                ? 'text-stone-900 dark:text-stone-100 border-b border-stone-900 dark:border-stone-100'
+                : 'text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300'
                 }`}
             >
               {t.portfolio.categories[category]}
@@ -67,7 +67,7 @@ const Portfolio: React.FC = () => {
                 <Link
                   key={project.id}
                   to={`/${project.behanceUrl}`}
-                  className="group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block reveal reveal-slide-up"
+                  className="group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-stone-900 block reveal reveal-slide-up"
                   style={{ transitionDelay: delay }}
                 >
                   <PortfolioItemContent project={project} language={language} t={t} />
@@ -81,7 +81,7 @@ const Portfolio: React.FC = () => {
                 href={project.behanceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white block reveal reveal-slide-up"
+                className="group relative cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-stone-900 block reveal reveal-slide-up"
                 style={{ transitionDelay: delay }}
               >
                 <PortfolioItemContent project={project} language={language} t={t} />
@@ -113,11 +113,11 @@ const PortfolioItemContent: React.FC<{ project: Project; language: string; t: an
         </p>
       </div>
     </div>
-    <div className="p-4 bg-white md:hidden">
-      <h3 className="text-stone-900 text-lg font-serif">
+    <div className="p-4 bg-white dark:bg-stone-900 md:hidden">
+      <h3 className="text-stone-900 dark:text-stone-100 text-lg font-serif">
         {language === 'zh' ? project.titleZh : project.titleEn}
       </h3>
-      <p className="text-stone-500 text-xs mt-1">
+      <p className="text-stone-500 dark:text-stone-400 text-xs mt-1">
         {project.category.map(cat => t.portfolio.categories[cat]).join(" | ")}
       </p>
     </div>

@@ -4,7 +4,7 @@ import { PROJECTS } from '../constants';
 import { useLanguage } from '../context/LanguageContext';
 import Navbar from './Navbar';
 import Contact from './Contact';
-import AIChat from './AIChat';
+
 
 const ProjectDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -51,7 +51,7 @@ const ProjectDetailPage: React.FC = () => {
     const description = language === 'zh' ? project.descriptionZh : project.descriptionEn;
 
     return (
-        <div className="bg-white min-h-screen text-stone-900 overflow-x-hidden" ref={containerRef}>
+        <div className="bg-white dark:bg-stone-950 text-stone-900 dark:text-stone-50 overflow-x-hidden transition-colors duration-300" ref={containerRef}>
             <Navbar />
 
             {/* Immersive Hero Section */}
@@ -85,24 +85,24 @@ const ProjectDetailPage: React.FC = () => {
             </section>
 
             {/* Intro Narrative Section */}
-            <section className="py-20 md:py-32 px-6 bg-white">
+            <section className="py-20 md:py-32 px-6 bg-white dark:bg-stone-950 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 items-center">
                     <div className="lg:col-span-1 hidden lg:block">
-                        <span className="text-stone-200 text-9xl font-serif select-none vertical-text rotate-180 transform -translate-x-12 opacity-50">
+                        <span className="text-stone-200 dark:text-stone-800 text-9xl font-serif select-none vertical-text rotate-180 transform -translate-x-12 opacity-50 transition-colors duration-300">
                             01
                         </span>
                     </div>
                     <div className="lg:col-span-7 reveal reveal-slide-up">
-                        <h2 className="text-xs uppercase tracking-[0.3em] text-stone-400 mb-12">Narrative</h2>
-                        <p className="text-3xl md:text-5xl font-light text-stone-900 leading-[1.3] font-serif">
+                        <h2 className="text-xs uppercase tracking-[0.3em] text-stone-400 dark:text-stone-500 mb-12">Narrative</h2>
+                        <p className="text-3xl md:text-5xl font-light text-stone-900 dark:text-stone-100 leading-[1.3] font-serif transition-colors duration-300">
                             {description}
                         </p>
                     </div>
-                    <div className="lg:col-span-4 border-l border-stone-100 pl-12 reveal reveal-fade-in delay-300">
+                    <div className="lg:col-span-4 border-l border-stone-100 dark:border-stone-800 pl-12 reveal reveal-fade-in delay-300 transition-colors duration-300">
                         <div className="space-y-12">
                             <div>
-                                <h3 className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 font-bold">Concept</h3>
-                                <p className="text-stone-600 text-sm leading-relaxed">
+                                <h3 className="text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-4 font-bold">Concept</h3>
+                                <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed transition-colors duration-300">
                                     {language === 'zh'
                                         ? "通过重塑内部建筑结构，我们不仅创造了一个居住空间，更是在繁忙的城市中构建了一片静谧的领地。每一个转角都经过深思熟虑，旨在引发情感的共鸣。"
                                         : "By reimagining internal architectural structures, we don't just create a living space; we construct a sanctuary within the urban bustle. Every corner is meticulously crafted to evoke emotional resonance."}
@@ -110,12 +110,12 @@ const ProjectDetailPage: React.FC = () => {
                             </div>
                             <div className="grid grid-cols-2 gap-8">
                                 <div>
-                                    <h3 className="text-[10px] uppercase tracking-widest text-stone-400 mb-2 font-bold">Year</h3>
-                                    <p className="text-stone-900 text-xs font-medium uppercase tracking-wider">2024 / Q3</p>
+                                    <h3 className="text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-2 font-bold">Year</h3>
+                                    <p className="text-stone-900 dark:text-stone-100 text-xs font-medium uppercase tracking-wider transition-colors duration-300">2024 / Q3</p>
                                 </div>
                                 <div>
-                                    <h3 className="text-[10px] uppercase tracking-widest text-stone-400 mb-2 font-bold">Style</h3>
-                                    <p className="text-stone-900 text-xs font-medium uppercase tracking-wider">European</p>
+                                    <h3 className="text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-2 font-bold">Style</h3>
+                                    <p className="text-stone-900 dark:text-stone-100 text-xs font-medium uppercase tracking-wider transition-colors duration-300">European</p>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,7 @@ const ProjectDetailPage: React.FC = () => {
             </section>
 
             {/* Artistic Gallery - Asymmetric Layout */}
-            <section className="pb-20 bg-white">
+            <section className="pb-20 bg-white dark:bg-stone-950 transition-colors duration-300">
                 <div className="max-w-screen-2xl mx-auto px-4 md:px-12 flex flex-col gap-20 md:gap-32">
 
                     {/* Gallery Item 1 - Wide Staggered */}
@@ -133,13 +133,13 @@ const ProjectDetailPage: React.FC = () => {
                             <img src={project.gallery?.[1]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="" />
                         </div>
                         <div className="md:col-span-4 reveal reveal-slide-left delay-400">
-                            <h3 className="text-2xl font-serif mb-4 italic text-stone-400">
+                            <h3 className="text-2xl font-serif mb-4 italic text-stone-400 dark:text-stone-500">
                                 {language === 'zh'
                                     ? "氛围"
                                     : "Atmosphere"}
                             </h3>
-                            <div className="w-12 h-[1px] bg-stone-200 mb-6"></div>
-                            <p className="text-stone-500 text-sm italic font-light">
+                            <div className="w-12 h-[1px] bg-stone-200 dark:bg-stone-800 mb-6 transition-colors duration-300"></div>
+                            <p className="text-stone-500 dark:text-stone-400 text-sm italic font-light transition-colors duration-300">
                                 {language === 'zh'
                                     ? "自然光线与触感表面的微妙互动。"
                                     : "The subtle interplay of natural light and tactile surfaces."}
@@ -149,8 +149,8 @@ const ProjectDetailPage: React.FC = () => {
 
                     {/* Gallery Item 2 - Central Focus */}
                     <div className="max-w-5xl mx-auto reveal reveal-fade-in">
-                        <div className="bg-white p-4 md:p-12 shadow-2xl relative">
-                            <div className="absolute -top-12 -left-12 text-stone-100 text-[20vw] font-serif leading-none select-none z-0">02</div>
+                        <div className="bg-white dark:bg-stone-900 p-4 md:p-12 shadow-2xl relative transition-colors duration-300">
+                            <div className="absolute -top-12 -left-12 text-stone-100 dark:text-stone-800 text-[20vw] font-serif leading-none select-none z-0 transition-colors duration-300">02</div>
                             <img src={project.gallery?.[2]} className="w-full h-auto relative z-10" alt="" />
                         </div>
                     </div>
@@ -159,7 +159,7 @@ const ProjectDetailPage: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
                         <div className="reveal reveal-slide-up pt-24">
                             <img src={project.gallery?.[3]} className="w-full h-auto shadow-xl" alt="" />
-                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 text-right font-bold">
+                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 text-right font-bold">
                                 {language === 'zh'
                                     ? "空间流动性"
                                     : "Spatial Fluidity"}
@@ -167,7 +167,7 @@ const ProjectDetailPage: React.FC = () => {
                         </div>
                         <div className="reveal reveal-slide-up delay-300">
                             <img src={project.gallery?.[4]} className="w-full h-auto shadow-xl" alt="" />
-                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 font-bold">
+                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 font-bold">
                                 {language === 'zh'
                                     ? "触感细节"
                                     : "Tactile Detail"}
@@ -184,7 +184,7 @@ const ProjectDetailPage: React.FC = () => {
                             <div className="aspect-[4/5] overflow-hidden">
                                 <img src={project.gallery?.[6]} className="w-full h-full object-cover" alt="" />
                             </div>
-                            <p className="mt-6 text-[10px] uppercase tracking-widest text-stone-300">
+                            <p className="mt-6 text-[10px] uppercase tracking-widest text-stone-300 dark:text-stone-600">
                                 {language === 'zh'
                                     ? "构图平衡"
                                     : "Compositional Balance"}
@@ -264,7 +264,7 @@ const ProjectDetailPage: React.FC = () => {
             </section>
 
             <Contact />
-            <AIChat />
+
 
             <style dangerouslySetInnerHTML={{
                 __html: `

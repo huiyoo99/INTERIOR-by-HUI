@@ -34,9 +34,7 @@ This project is configured to deploy automatically to GitHub Pages using GitHub 
     npm install
     ```
 
-2.  **Environment Setup:**
-    - Create a `.env` file (or `.env.local`).
-    - Add your API key: `GEMINI_API_KEY=your_key_here`
+
 
 3.  **Run Locally:**
     ```bash
