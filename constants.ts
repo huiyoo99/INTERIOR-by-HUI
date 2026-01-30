@@ -14,13 +14,14 @@ import p5_7 from './assets/project5/p5_7.jpg';
 export const PROJECTS: Project[] = [
   {
     id: 1,
-    titleZh: "工业巅峰，轮毂旗舰",
-    titleEn: "The Apex of Wheel Artistry",
-    category: [ProjectCategory.COMMERCIAL],
+    titleZh: "谧光宅邸",
+    titleEn: "The Lumina Residence",
+    category: [ProjectCategory.MINIMALIST, ProjectCategory.RESIDENTIAL],
     image: img1,
-    descriptionZh: "融合原始水泥肌理与利落的线性灯光，将汽车配件打造为如艺术馆般的展示体验。",
-    descriptionEn: "gallery-like showroom blending raw concrete textures with sleek linear lighting to highlight automotive craftsmanship.",
-    behanceUrl: "https://www.behance.net/gallery/241900451/RIM-Flagship"
+    descriptionZh: "重新定义现代洋房：一场关于体量与虚空的博弈。",
+    descriptionEn: "Redefining the modern bungalow through volume and void. ",
+    behanceUrl: "https://www.behance.net/gallery/242071501/THE-LUMINA-RESIDENCE"
+
   },
   {
     id: 2,
@@ -34,13 +35,13 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 3,
-    titleZh: "谧光宅邸",
-    titleEn: "The Lumina Residence",
-    category: [ProjectCategory.MINIMALIST, ProjectCategory.RESIDENTIAL],
+    titleZh: "工业巅峰，轮毂旗舰",
+    titleEn: "The Apex of Wheel Artistry",
+    category: [ProjectCategory.COMMERCIAL],
     image: img3,
-    descriptionZh: "重新定义现代洋房：一场关于体量与虚空的博弈。",
-    descriptionEn: "Redefining the modern bungalow through volume and void. ",
-    behanceUrl: "https://www.behance.net/gallery/242071501/THE-LUMINA-RESIDENCE"
+    descriptionZh: "融合原始水泥肌理与利落的线性灯光，将汽车配件打造为如艺术馆般的展示体验。",
+    descriptionEn: "gallery-like showroom blending raw concrete textures with sleek linear lighting to highlight automotive craftsmanship.",
+    behanceUrl: "https://www.behance.net/gallery/241900451/RIM-Flagship"
   },
   {
     id: 4,
