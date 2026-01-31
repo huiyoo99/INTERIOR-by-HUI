@@ -3,6 +3,13 @@ import img1 from './assets/1.jpg';
 import img2 from './assets/2.jpg';
 import img3 from './assets/3.jpg';
 import img4 from './assets/4.jpg';
+import p6_1 from './assets/project6/1.jpg';
+import p6_2 from './assets/project6/5_3.jpg';
+import p6_3 from './assets/project6/6_1_1.jpg';
+import p6_4 from './assets/project6/7_2.jpg';
+import p6_5 from './assets/project6/8.jpg';
+import p6_6 from './assets/project6/9.jpg';
+import p6_7 from './assets/project6/10.jpg';
 import p5_1 from './assets/project5/p5_1.jpg';
 import p5_2 from './assets/project5/p5_2.jpg';
 import p5_3 from './assets/project5/p5_3.jpg';
@@ -69,10 +76,10 @@ export const PROJECTS: Project[] = [
     titleZh: "POKÉMON PLAY LAB",
     titleEn: "POKÉMON PLAY LAB",
     category: [ProjectCategory.COMMERCIAL],
-    image: 'assets/project6/1.jpg',
+    image: p6_1,
     descriptionZh: "连接数字图鉴与物理现实的纽带。这是一个为新一代训练师打造的沉浸式零售游乐场。",
     descriptionEn: "Bridging the gap between the digital Pokédex and physical reality. An immersive retail playground designed for the next generation of trainers.",
     behanceUrl: "project/6",
-    gallery: ['assets/project6/1.jpg', 'assets/project6/2.jpg', 'assets/project6/3.jpg', 'assets/project6/4.jpg', 'assets/project6/5.jpg', 'assets/project6/6.jpg', 'assets/project6/7.jpg']
+    gallery: [p6_1, p6_2, p6_3, p6_4, p6_5, p6_6, p6_7]
   },
 ];
