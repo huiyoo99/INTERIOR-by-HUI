@@ -13,6 +13,7 @@ export default {
             fontFamily: {
                 serif: ['"Playfair Display"', 'serif'],
                 sans: ['"Inter"', 'sans-serif'],
+                grotesk: ['"Space Grotesk"', 'sans-serif'],
             },
             colors: {
                 stone: {

@@ -6,8 +6,15 @@ import Navbar from './Navbar';
 import Contact from './Contact';
 
 
+import Project6 from './Project6';
+
 const ProjectDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
+
+    if (id === '6') {
+        return <Project6 />;
+    }
+
     const { language, t } = useLanguage();
     const containerRef = useRef<HTMLDivElement>(null);
 

@@ -64,4 +64,15 @@ export const PROJECTS: Project[] = [
     behanceUrl: "project/5",
     gallery: [p5_1, p5_2, p5_3, p5_4, p5_5, p5_6, p5_7]
   },
+  {
+    id: 6,
+    titleZh: "POKÉMON PLAY LAB",
+    titleEn: "POKÉMON PLAY LAB",
+    category: [ProjectCategory.COMMERCIAL],
+    image: 'assets/project6/1.jpg',
+    descriptionZh: "连接数字图鉴与物理现实的纽带。这是一个为新一代训练师打造的沉浸式零售游乐场。",
+    descriptionEn: "Bridging the gap between the digital Pokédex and physical reality. An immersive retail playground designed for the next generation of trainers.",
+    behanceUrl: "project/6",
+    gallery: ['assets/project6/1.jpg', 'assets/project6/2.jpg', 'assets/project6/3.jpg', 'assets/project6/4.jpg', 'assets/project6/5.jpg', 'assets/project6/6.jpg', 'assets/project6/7.jpg']
+  },
 ];
