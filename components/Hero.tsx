@@ -102,7 +102,10 @@ const Hero: React.FC = () => {
   return (
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Canvas Background */}
-      <div className="absolute inset-0 z-0">
+      <div 
+        className="absolute inset-0 z-0"
+        style={{ transform: 'translateY(calc(var(--scroll-y, 0px) * 0.4))' }}
+      >
         <canvas ref={canvasRef} className="w-full h-full block opacity-90" />
         <div className="absolute inset-0 bg-black/30"></div>
       </div>
