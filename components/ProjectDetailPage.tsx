@@ -1,352 +1,308 @@
 import React, { useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import { useLanguage } from '../context/LanguageContext';
-import Navbar from './Navbar';
-import Contact from './Contact';
-
-
 import Project6 from './Project6';
+import Project5 from './Project5';
+
+// 耀眼的霓虹荧光黄
+const NEON_YELLOW = '#E5FF00';
+
+// 尖锐的几何星芒
+const SharpStar = ({ className = "", outlined = false }) => (
+  <svg viewBox="0 0 100 100" className={className} fill={outlined ? "none" : "currentColor"} stroke={outlined ? "currentColor" : "none"} strokeWidth={outlined ? "2" : "0"}>
+    <polygon points="50,0 58,35 93,15 65,46 100,50 65,54 93,85 58,65 50,100 42,65 7,85 35,54 0,50 35,46 7,15 42,35" />
+  </svg>
+);
+
+// 相机取景器十字准星
+const Crosshair = ({ className = "" }) => (
+  <div className={`absolute w-4 h-4 flex items-center justify-center opacity-50 ${className}`}>
+    <div className="absolute w-full h-[1px] bg-current"></div>
+    <div className="absolute h-full w-[1px] bg-current"></div>
+  </div>
+);
+
+// 幻灯片布局包裹组件
+const Slide = ({ pageNum, title = "ARCHIVE // 2026", children, className = "", dark = true, onHomeClick }: any) => (
+  <section className={`snap-start h-[100dvh] w-full flex flex-col relative overflow-hidden shrink-0 ${dark ? 'bg-[#0a0a0a] text-white' : 'bg-[#E5FF00] text-black'} ${className}`}>
+    
+    {/* 四角十字准星 */}
+    <Crosshair className="top-8 left-8" />
+    <Crosshair className="top-8 right-8" />
+    <Crosshair className="bottom-8 left-8" />
+    <Crosshair className="bottom-8 right-8" />
+
+    {/* 统一的顶部标识与导航栏 */}
+    <div className="flex justify-between items-start w-full p-6 md:p-12 font-mono uppercase text-[10px] md:text-xs tracking-[0.3em] z-30 mix-blend-difference text-white">
+      <div className="flex gap-4 items-center">
+        <span className="w-2 h-2 rounded-full bg-[#E5FF00] animate-pulse"></span>
+        {title}
+      </div>
+      <div className="flex gap-6 md:gap-16">
+        <span onClick={onHomeClick} className="hover:text-[#E5FF00] cursor-pointer transition-colors">INDEX</span>
+      </div>
+    </div>
+
+    {/* 主体内容 */}
+    <div className="flex-1 w-full h-full relative z-10 flex flex-col justify-center">
+      {children}
+    </div>
+
+    {/* 统一的底部页码 */}
+    <div className="absolute bottom-8 left-12 md:bottom-12 md:left-16 font-mono text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase z-30 flex items-center gap-4">
+      <span className="text-zinc-500">NO.</span>
+      <span className={dark ? 'text-[#E5FF00]' : 'text-black'}>00{pageNum}</span>
+    </div>
+    
+    {/* 底部箭头 */}
+    <div className="absolute bottom-6 right-10 md:bottom-12 md:right-16 text-xl md:text-3xl font-light z-30 mix-blend-difference text-white animate-bounce pointer-events-none">
+      ↓
+    </div>
+  </section>
+);
 
 const ProjectDetailPage: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
-    if (id === '6') {
-        return <Project6 />;
-    }
+  if (id === '6') {
+      return <Project6 />;
+  }
+  if (id === '5') {
+      return <Project5 />;
+  }
 
-    const { language, t } = useLanguage();
-    const containerRef = useRef<HTMLDivElement>(null);
+  const { language, t } = useLanguage();
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    const project = PROJECTS.find(p => p.id === Number(id));
+  const project = PROJECTS.find(p => p.id === Number(id));
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
+  // 强制接管外层容器的滚动，使其能够贴合 snap-scrolling
+  useEffect(() => {
+      document.body.style.overflow = 'hidden';
+      return () => {
+          document.body.style.overflow = 'auto'; // 离开页面时恢复
+      };
+  }, []);
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+  if (!project) return null;
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal-active');
-                }
-            });
-        }, observerOptions);
+  const handleHomeClick = () => {
+      navigate('/');
+  };
 
-        const revealElements = document.querySelectorAll('.reveal');
-        revealElements.forEach(el => observer.observe(el));
+  const title = language === 'zh' ? project.titleZh : project.titleEn;
+  const description = language === 'zh' ? project.descriptionZh : project.descriptionEn;
+  const cats = project.category.map(cat => t.portfolio.categories[cat]).join(" /// ");
 
-        return () => observer.disconnect();
-    }, [id]);
+  // 为了制作激进排版，将标题一分为二
+  const titleHalfLength = Math.ceil(title.length / 2);
+  const title1 = title.slice(0, titleHalfLength);
+  const title2 = title.slice(titleHalfLength);
 
-    if (!project) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-stone-50">
-                <div className="text-center">
-                    <h1 className="text-2xl font-serif text-stone-900 mb-4">Project Not Found</h1>
-                    <Link to="/" className="text-stone-600 hover:text-stone-900 underline">Back to Home</Link>
-                </div>
+  return (
+    <div className="h-[100dvh] w-full bg-[#0a0a0a] text-white font-sans selection:bg-[#E5FF00] selection:text-black overflow-y-scroll snap-y snap-mandatory custom-scrollbar relative" ref={containerRef}>
+      
+      {/* 全局胶片噪点遮罩 */}
+      <div className="pointer-events-none fixed inset-0 z-50 opacity-[0.04] mix-blend-overlay">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+          <filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/></filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+        </svg>
+      </div>
+
+      {/* PAGE 1: 巨型封面 */}
+      <Slide pageNum="1" title={`PRJ_${project.id} // 2026`} onHomeClick={handleHomeClick}>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <SharpStar className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vh] h-[80vh] text-[#E5FF00] opacity-10 animate-[spin_40s_linear_infinite]" outlined={true} />
+          
+          <h1 className="text-[18vw] md:text-[14vw] font-black tracking-tighter uppercase leading-[0.8] z-10 flex flex-col items-center whitespace-nowrap">
+            <span className="text-transparent relative w-full text-left ml-[5vw]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.8)' }}>
+              {title1 || 'PRO'}
+            </span>
+            <span className="text-[#E5FF00] relative w-full text-right mr-[5vw]">
+              {title2 || 'JECT'}
+            </span>
+          </h1>
+          <p className="mt-12 font-mono text-xs md:text-sm tracking-[0.5em] text-zinc-400 uppercase mix-blend-difference">
+             Interior Design // Brutalism
+          </p>
+        </div>
+
+        {/* 底部跑马灯 */}
+        <div className="absolute bottom-24 w-full overflow-hidden border-y border-zinc-800 py-2 bg-[#E5FF00]/10 flex z-20">
+           <div className="animate-marquee whitespace-nowrap font-mono text-xs tracking-widest text-[#E5FF00]">
+             [ DESIGN FOCUS ] /// [ {cats} ] /// [ EXCLUSIVE ARCHIVE ] /// [ DESIGN FOCUS ] /// [ {cats} ] /// [ EXCLUSIVE ARCHIVE ] /// [ DESIGN FOCUS ] /// [ {cats} ] /// 
+           </div>
+        </div>
+      </Slide>
+
+      {/* PAGE 2: 项目介绍 (画廊风格) */}
+      <Slide pageNum="2" onHomeClick={handleHomeClick}>
+        <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-12 px-6 md:px-20 items-center">
+          <div className="md:col-span-5 relative h-[45vh] md:h-[70vh] group overflow-hidden">
+            <div className="absolute inset-0 bg-[#E5FF00] mix-blend-color opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"></div>
+            <img 
+              src={project.image} 
+              alt={title} 
+              className="w-full h-full object-cover contrast-150 group-hover:scale-105 transition-transform duration-1000" 
+            />
+            <div className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[0.2em] bg-black text-white px-2 py-1 z-20">FIG 01.</div>
+          </div>
+          
+          <div className="md:col-span-1"></div>
+
+          <div className="md:col-span-6 flex flex-col justify-center py-10 md:py-0 relative">
+            <div className="absolute -left-10 top-0 h-full w-[1px] bg-zinc-800 hidden md:block"></div>
+            <p className="font-mono text-xs tracking-[0.4em] text-[#E5FF00] mb-4">IDENTIFICATION</p>
+            <h2 className="text-5xl md:text-[6vw] font-black uppercase tracking-tighter leading-[0.85] mb-8 break-words text-wrap">
+              {language === 'zh' ? '项目' : 'About'}<br/>
+              {language === 'zh' ? '背景' : 'Project'}
+            </h2>
+            <div className="w-16 h-[2px] bg-white mb-8"></div>
+            <h3 className="text-xl md:text-2xl font-bold uppercase mb-4 tracking-widest">
+                {language === 'zh' ? '设计理念' : 'Core Concept'}
+            </h3>
+            <p className="text-zinc-400 font-mono text-[10px] md:text-xs tracking-widest uppercase mb-8 border border-zinc-800 inline-block px-3 py-1">2024 / Q3 // High-End Design</p>
+            <p className="text-zinc-400 leading-relaxed text-sm md:text-base font-medium max-w-lg tracking-wide">
+              {description}
+            </p>
+          </div>
+        </div>
+      </Slide>
+
+      {/* PAGE 3: 核心数据/理念 (巨型数字版式) */}
+      <Slide pageNum="3" onHomeClick={handleHomeClick}>
+        <div className="absolute inset-0 flex flex-col md:flex-row px-6 md:px-20 pt-24 pb-20 items-center justify-center gap-12 md:gap-24">
+          <div className="w-full md:w-1/2 order-2 md:order-1 relative z-10">
+             <h2 className="text-6xl md:text-[8vw] font-black uppercase tracking-tighter leading-[0.85]">
+                <span className="text-transparent" style={{ WebkitTextStroke: '2px #E5FF00' }}>{language === 'zh' ? '空间' : 'SPACE'}</span><br/>
+                {language === 'zh' ? '定义' : 'DEF'}
+             </h2>
+             <SharpStar className="w-24 h-24 text-[#E5FF00] absolute -right-4 bottom-0 animate-[spin_10s_linear_infinite]" />
+          </div>
+          
+          <div className="w-full md:w-1/2 flex flex-col justify-center gap-10 border-l border-zinc-800 pl-8 md:pl-16 relative order-1 md:order-2">
+            <div className="relative group">
+              <div className="absolute -left-[33px] md:-left-[65px] top-2 w-2 h-2 bg-[#E5FF00] rounded-full opacity-100"></div>
+              <div className="font-mono text-xs tracking-[0.3em] text-[#E5FF00] mb-2 uppercase border-b border-zinc-800 inline-block pb-1">
+                 {language === 'zh' ? '概念核心' : 'Concept Focus'}
+              </div>
+              <p className="text-zinc-400 text-sm md:text-base leading-relaxed tracking-wide text-justify mt-4">
+                 {language === 'zh'
+                     ? "通过重塑内部建筑结构，我们不仅创造了一个居住空间，更是在繁忙的城市中构建了一片静谧的领地。每一个转角都经过深思熟虑，旨在引发情感的共鸣。"
+                     : "By reimagining internal architectural structures, we don't just create a living space; we construct a sanctuary within the urban bustle."}
+              </p>
             </div>
-        );
-    }
+            
+            <div className="relative group">
+              <div className="absolute -left-[33px] md:-left-[65px] top-2 w-2 h-2 bg-[#E5FF00] rounded-full opacity-100"></div>
+              <div className="font-mono text-xs tracking-[0.3em] text-[#E5FF00] mb-2 uppercase border-b border-zinc-800 inline-block pb-1">
+                 {language === 'zh' ? '风格与细节' : 'Style & Vibe'}
+              </div>
+              <p className="text-zinc-400 text-sm md:text-base leading-relaxed tracking-wide text-justify mt-4">
+                 {language === 'zh' 
+                     ? '整体采用了极简粗野主义风格，剥离多余修饰，强调几何线条与光影的切割，产生戏剧性的视觉冲突。' 
+                     : 'Adopting a brutalist minimalist style, stripping away excess ornament to emphasize raw geometric lines and dramatic lighting.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </Slide>
 
-    const title = language === 'zh' ? project.titleZh : project.titleEn;
-    const description = language === 'zh' ? project.descriptionZh : project.descriptionEn;
+      {/* PAGE 4: Gallery Grids */}
+      {project.gallery && project.gallery.length > 2 && (
+      <Slide pageNum="4" onHomeClick={handleHomeClick}>
+        <div className="absolute inset-0 pt-24 pb-20 px-6 md:px-20">
+          <div className="w-full h-full grid grid-cols-2 md:grid-cols-4 grid-rows-4 md:grid-rows-2 gap-4">
+            
+            <div className="col-span-2 row-span-2 bg-zinc-900 overflow-hidden relative group">
+              <img src={project.gallery[1]} className="w-full h-full object-cover contrast-125 transition-all duration-700" alt="img" />
+              <div className="absolute top-4 left-4 font-mono text-[10px] bg-white text-black px-2 uppercase mix-blend-screen">01 / Vibe</div>
+            </div>
+            
+            <div className="col-span-1 row-span-1 bg-zinc-900 overflow-hidden relative group border border-zinc-800 hidden md:block">
+               <img src={project.gallery[2]} className="w-full h-full object-cover contrast-150 transition-all duration-700" alt="img" />
+            </div>
 
-    return (
-        <div className="bg-white dark:bg-stone-950 text-stone-900 dark:text-stone-50 overflow-x-hidden transition-colors duration-300" ref={containerRef}>
-            <Navbar />
+            <div className="col-span-1 row-span-2 bg-[#E5FF00] overflow-hidden relative flex flex-col items-center justify-center text-black p-6 text-center">
+               <SharpStar className="w-16 h-16 mb-6" />
+               <h3 className="font-black uppercase tracking-tighter text-2xl mb-2">Vis<br/>Archive</h3>
+               <p className="font-mono text-[10px] tracking-widest uppercase">Details 2026</p>
+            </div>
 
-            {/* Immersive Hero Section */}
-            <section className="relative h-screen overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src={project.image}
-                        alt={title}
-                        className="w-full h-full object-cover scale-110 animate-subtle-zoom"
-                    />
-                    <div className="absolute inset-0 bg-stone-900/40 mix-blend-multiply"></div>
-                </div>
+            {project.gallery.length > 3 && (
+            <div className="col-span-1 row-span-1 bg-zinc-900 overflow-hidden relative group border border-zinc-800 hidden md:block">
+               <img src={project.gallery[3]} className="w-full h-full object-cover contrast-150 transition-all duration-700" alt="img" />
+            </div>
+            )}
+            
+          </div>
+        </div>
+      </Slide>
+      )}
 
-                <div className="relative z-10 text-center px-6 max-w-5xl">
-                    <div className="overflow-hidden mb-6">
-                        <h1 className="text-6xl md:text-8xl font-serif text-white leading-tight animate-slide-up-reveal">
-                            {title}
-                        </h1>
-                    </div>
-                    <div className="w-16 h-[2px] bg-white/60 mx-auto mb-10 animate-grow-width"></div>
-                    <p className="text-white/80 text-xs uppercase tracking-[0.5em] animate-fade-in-long">
-                        {project.category.map(cat => t.portfolio.categories[cat]).join(" // ")}
-                    </p>
-                </div>
+      {/* PAGE 5: 底部 Next Chapter */}
+      <Slide pageNum={project.gallery && project.gallery.length > 2 ? "5" : "4"} onHomeClick={handleHomeClick}>
+        <div className="absolute inset-0 flex flex-col justify-between pt-24 pb-12 px-6 md:px-12 bg-[#0a0a0a]">
+          
+          <div className="flex-1 flex flex-col justify-center">
+            <h2 onClick={handleHomeClick} className="text-[12vw] font-black uppercase tracking-tighter leading-[0.8] mb-12 mix-blend-difference cursor-pointer transition-transform hover:translate-x-4">
+              BACK TO<br/>
+              <span className="text-transparent" style={{ WebkitTextStroke: '2px #E5FF00' }}>INDEX</span>
+            </h2>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] border-y border-zinc-800 py-8">
+              <div className="flex flex-col gap-2 group">
+                 <span className="text-zinc-600">PROJECT</span>
+                 <span className="group-hover:text-[#E5FF00] transition-colors text-white text-sm">
+                    {language === 'zh' ? "室内设计" : "Interior Design"}
+                 </span>
+              </div>
+              <div className="flex flex-col gap-2 group">
+                 <span className="text-zinc-600">ACTION</span>
+                 <span className="group-hover:text-[#E5FF00] transition-colors cursor-pointer text-white text-sm" onClick={handleHomeClick}>
+                    {language === 'zh' ? "探索更多" : "Explore More"}
+                 </span>
+              </div>
+              <div className="flex flex-col gap-2 group">
+                 <span className="text-zinc-600">CONTACT</span>
+                 <span className="group-hover:text-[#E5FF00] transition-colors cursor-pointer text-white text-sm">
+                    HELLO@HUI.COM
+                 </span>
+              </div>
+              <div className="flex flex-col gap-2 group">
+                 <span className="text-zinc-600">STUDIO</span>
+                 <span className="group-hover:text-[#E5FF00] transition-colors text-white text-sm">DESIGN LAB, ASIA</span>
+              </div>
+            </div>
+          </div>
 
-                {/* Scroll Indicator */}
-                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-bounce-subtle">
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-white/50 vertical-text">Explore</span>
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-white/0 via-white/50 to-white/0"></div>
-                </div>
-            </section>
+          <div className="w-full text-center overflow-hidden h-24 relative">
+             <h1 className="text-[15vw] font-black uppercase tracking-tighter leading-none text-zinc-900 absolute -bottom-4 w-full text-center left-0 right-0 pointer-events-none">
+               THANK YOU
+             </h1>
+          </div>
+        </div>
+      </Slide>
 
-            {/* Intro Narrative Section */}
-            <section className="py-20 md:py-32 px-6 bg-white dark:bg-stone-950 transition-colors duration-300">
-                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 items-center">
-                    <div className="lg:col-span-1 hidden lg:block">
-                        <span className="text-stone-200 dark:text-stone-800 text-9xl font-serif select-none vertical-text rotate-180 transform -translate-x-12 opacity-50 transition-colors duration-300">
-                            01
-                        </span>
-                    </div>
-                    <div className="lg:col-span-7 reveal reveal-slide-up">
-                        <h2 className="text-xs uppercase tracking-[0.3em] text-stone-400 dark:text-stone-500 mb-12">Narrative</h2>
-                        <p className="text-3xl md:text-5xl font-light text-stone-900 dark:text-stone-100 leading-[1.3] font-serif transition-colors duration-300">
-                            {description}
-                        </p>
-                    </div>
-                    <div className="lg:col-span-4 border-l border-stone-100 dark:border-stone-800 pl-12 reveal reveal-fade-in delay-300 transition-colors duration-300">
-                        <div className="space-y-12">
-                            <div>
-                                <h3 className="text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-4 font-bold">Concept</h3>
-                                <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed transition-colors duration-300">
-                                    {language === 'zh'
-                                        ? "通过重塑内部建筑结构，我们不仅创造了一个居住空间，更是在繁忙的城市中构建了一片静谧的领地。每一个转角都经过深思熟虑，旨在引发情感的共鸣。"
-                                        : "By reimagining internal architectural structures, we don't just create a living space; we construct a sanctuary within the urban bustle. Every corner is meticulously crafted to evoke emotional resonance."}
-                                </p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-8">
-                                <div>
-                                    <h3 className="text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-2 font-bold">Year</h3>
-                                    <p className="text-stone-900 dark:text-stone-100 text-xs font-medium uppercase tracking-wider transition-colors duration-300">2024 / Q3</p>
-                                </div>
-                                <div>
-                                    <h3 className="text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-2 font-bold">Style</h3>
-                                    <p className="text-stone-900 dark:text-stone-100 text-xs font-medium uppercase tracking-wider transition-colors duration-300">European</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Artistic Gallery - Asymmetric Layout */}
-            <section className="pb-20 bg-white dark:bg-stone-950 transition-colors duration-300">
-                <div className="max-w-screen-2xl mx-auto px-4 md:px-12 flex flex-col gap-20 md:gap-32">
-
-                    {/* Gallery Item 1 - Wide Staggered */}
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal reveal-parallax group">
-                        <div className="md:col-span-8 overflow-hidden rounded-sm aspect-[16/9]">
-                            <img src={project.gallery?.[1]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="" />
-                        </div>
-                        <div className="md:col-span-4 reveal reveal-slide-left delay-400">
-                            <h3 className="text-2xl font-serif mb-4 italic text-stone-400 dark:text-stone-500">
-                                {language === 'zh'
-                                    ? "氛围"
-                                    : "Atmosphere"}
-                            </h3>
-                            <div className="w-12 h-[1px] bg-stone-200 dark:bg-stone-800 mb-6 transition-colors duration-300"></div>
-                            <p className="text-stone-500 dark:text-stone-400 text-sm italic font-light transition-colors duration-300">
-                                {language === 'zh'
-                                    ? "自然光线与触感表面的微妙互动。"
-                                    : "The subtle interplay of natural light and tactile surfaces."}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Gallery Item 2 - Central Focus */}
-                    <div className="max-w-5xl mx-auto reveal reveal-fade-in">
-                        <div className="bg-white dark:bg-stone-900 p-4 md:p-12 shadow-2xl relative transition-colors duration-300">
-                            <div className="absolute -top-12 -left-12 text-stone-100 dark:text-stone-800 text-[20vw] font-serif leading-none select-none z-0 transition-colors duration-300">02</div>
-                            <img src={project.gallery?.[2]} className="w-full h-auto relative z-10" alt="" />
-                        </div>
-                    </div>
-
-                    {/* Gallery Item 3 & 4 - Staggered Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
-                        <div className="reveal reveal-slide-up pt-24">
-                            <img src={project.gallery?.[3]} className="w-full h-auto shadow-xl" alt="" />
-                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 text-right font-bold">
-                                {language === 'zh'
-                                    ? "空间流动性"
-                                    : "Spatial Fluidity"}
-                            </p>
-                        </div>
-                        <div className="reveal reveal-slide-up delay-300">
-                            <img src={project.gallery?.[4]} className="w-full h-auto shadow-xl" alt="" />
-                            <p className="mt-8 text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 font-bold">
-                                {language === 'zh'
-                                    ? "触感细节"
-                                    : "Tactile Detail"}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* New Artistic Multi-Image Row (5 & 6) */}
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
-                        <div className="md:col-span-5 reveal reveal-slide-up">
-                            <img src={project.gallery?.[5]} className="w-full h-auto" alt="" />
-                        </div>
-                        <div className="md:col-span-7 reveal reveal-slide-up delay-400">
-                            <div className="aspect-[4/5] overflow-hidden">
-                                <img src={project.gallery?.[6]} className="w-full h-full object-cover" alt="" />
-                            </div>
-                            <p className="mt-6 text-[10px] uppercase tracking-widest text-stone-300 dark:text-stone-600">
-                                {language === 'zh'
-                                    ? "构图平衡"
-                                    : "Compositional Balance"}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Gallery Item 7 - Final Impact */}
-                    <div className="w-full h-[90vh] relative reveal reveal-fade-in group">
-                        <img
-                            src={project.gallery?.[0]}
-                            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-                            alt=""
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center p-12">
-                            <div className="border border-white/20 backdrop-blur-md bg-white/10 p-12 max-w-2xl text-center text-white reveal reveal-blur-in">
-                                <h4 className="text-3xl font-serif mb-6">
-                                    {language === 'zh'
-                                        ? "结语"
-                                        : "Ending Note"}
-                                </h4>
-                                <p className="text-sm font-light leading-relaxed text-white/80">
-                                    {language === 'zh'
-                                        ? "设计不仅仅是感觉。设计是关于如何运作，以及如何在空间的寂静中让你感到共鸣。"
-                                        : "Design is not just what it looks like and feels like. Design is how it works and how it makes you feel within the silence of a space."}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            {/* High-End Conclusion */}
-            <section className="py-32 bg-stone-900 overflow-hidden relative">
-                <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-white opacity-[0.02] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-                    <span className="text-white/30 text-[10px] uppercase tracking-[1em] mb-12 block">
-                        {language === 'zh'
-                            ? "Next Chapter"
-                            : "Next Chapter"}
-                    </span>
-                    <h2 className="text-5xl md:text-7xl font-serif text-white mb-20 leading-tight">
-                        {language === 'zh'
-                            ? "提升您的生活体验。"
-                            : "Elevate your living experience."}
-                    </h2>
-
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-                        <Link
-                            to="/"
-                            className="text-white group relative pb-2 overflow-hidden block"
-                        >
-                            <span className="uppercase tracking-[0.4em] text-xs font-bold inline-block transform group-hover:-translate-y-full transition-transform duration-500">
-                                {language === 'zh'
-                                    ? "返回首页"
-                                    : "Back to Index"}
-                            </span>
-                            <span className="uppercase tracking-[0.4em] text-xs font-bold absolute bottom-2 left-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 text-stone-400">
-                                {language === 'zh'
-                                    ? "返回首页"
-                                    : "Back to Index"}
-                            </span>
-                            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                        </Link>
-
-                        <a
-                            href="#contact"
-                            className="px-10 py-5 border border-white/20 text-white rounded-full hover:bg-white hover:text-stone-900 transition-all duration-500 uppercase tracking-widest text-[10px] font-bold"
-                        >
-                            {language === 'zh'
-                                ? "开始合作"
-                                : "Start Collaboration"}
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <Contact />
-
-
-            <style dangerouslySetInnerHTML={{
-                __html: `
-        .vertical-text {
-          writing-mode: vertical-rl;
+      <style dangerouslySetInnerHTML={{__html: `
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 0px;
+          display: none;
         }
-        
-        /* Reveal Base Classes */
-        .reveal {
-          opacity: 0;
-          transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
         }
-        
-        .reveal-slide-up { transform: translateY(60px); }
-        .reveal-slide-left { transform: translateX(60px); }
-        .reveal-fade-in { transform: scale(0.95); }
-        .reveal-blur-in { filter: blur(20px); }
-        
-        .reveal.reveal-active {
-          opacity: 1;
-          transform: translate(0) scale(1);
-          filter: blur(0);
-        }
-
-        .delay-300 { transition-delay: 300ms; }
-        .delay-400 { transition-delay: 400ms; }
-        
-        /* Keyframes */
-        @keyframes sublte-zoom {
-          from { transform: scale(1.1); }
-          to { transform: scale(1); }
-        }
-        .animate-subtle-zoom {
-          animation: sublte-zoom 20s infinite alternate ease-in-out;
-        }
-
-        @keyframes bounce-subtle {
-          0%, 100% { transform: translate(-50%, 0); }
-          50% { transform: translate(-50%, 10px); }
-        }
-        .animate-bounce-subtle {
-          animation: bounce-subtle 3s infinite ease-in-out;
-        }
-
-        @keyframes slide-up-reveal {
-          from { transform: translateY(100%); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        .animate-slide-up-reveal {
-          animation: slide-up-reveal 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        @keyframes grow-width {
-          from { width: 0; }
-          to { width: 4rem; }
-        }
-        .animate-grow-width {
-          animation: grow-width 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-        }
-
-        @keyframes fade-in-long {
-          from { opacity: 0; }
-          to { opacity: 0.8; }
-        }
-        .animate-fade-in-long {
-          animation: fade-in-long 3s ease-out forwards;
-        }
-
-        ::selection {
-          background-color: #1c1917;
-          color: #fafaf9;
+        .animate-marquee {
+          display: inline-block;
+          animation: marquee 20s linear infinite;
         }
       `}} />
-        </div>
-    );
+    </div>
+  );
 };
 
 export default ProjectDetailPage;

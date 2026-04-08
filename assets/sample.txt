@@ -1,0 +1,322 @@
+import React, { useEffect, useRef } from 'react';
+
+// 耀眼的霓虹荧光黄
+const NEON_YELLOW = '#E5FF00';
+
+// 尖锐的几何星芒
+const SharpStar = ({ className = "", outlined = false }) => (
+  <svg viewBox="0 0 100 100" className={className} fill={outlined ? "none" : "currentColor"} stroke={outlined ? "currentColor" : "none"} strokeWidth={outlined ? "2" : "0"}>
+    <polygon points="50,0 58,35 93,15 65,46 100,50 65,54 93,85 58,65 50,100 42,65 7,85 35,54 0,50 35,46 7,15 42,35" />
+  </svg>
+);
+
+// 相机取景器十字准星
+const Crosshair = ({ className = "" }) => (
+  <div className={`absolute w-4 h-4 flex items-center justify-center opacity-50 ${className}`}>
+    <div className="absolute w-full h-[1px] bg-current"></div>
+    <div className="absolute h-full w-[1px] bg-current"></div>
+  </div>
+);
+
+// 幻灯片布局包裹组件 (高级排版)
+const Slide = ({ pageNum, title = "ARCHIVE // 2026", children, className = "", dark = true }) => (
+  <section className={`snap-start h-screen w-full flex flex-col relative overflow-hidden ${dark ? 'bg-[#0a0a0a] text-white' : 'bg-[#E5FF00] text-black'} ${className}`}>
+    
+    {/* 四角十字准星 */}
+    <Crosshair className="top-8 left-8" />
+    <Crosshair className="top-8 right-8" />
+    <Crosshair className="bottom-8 left-8" />
+    <Crosshair className="bottom-8 right-8" />
+
+    {/* 统一的顶部标识与导航栏 (等宽字体强化技术感) */}
+    <div className="flex justify-between items-start w-full p-8 md:p-12 font-mono uppercase text-[10px] md:text-xs tracking-[0.3em] z-30 mix-blend-difference text-white">
+      <div className="flex gap-4 items-center">
+        <span className="w-2 h-2 rounded-full bg-[#E5FF00] animate-pulse"></span>
+        {title}
+      </div>
+      <div className="flex gap-8 md:gap-16">
+        <span className="hover:text-[#E5FF00] cursor-pointer transition-colors">HOME</span>
+        <span className="hover:text-[#E5FF00] cursor-pointer transition-colors">ABOUT</span>
+        <span className="hover:text-[#E5FF00] cursor-pointer transition-colors">MORE</span>
+      </div>
+    </div>
+
+    {/* 主体内容 */}
+    <div className="flex-1 w-full h-full relative z-10 flex flex-col justify-center">
+      {children}
+    </div>
+
+    {/* 统一的底部页码 */}
+    <div className="absolute bottom-8 left-12 md:bottom-12 md:left-16 font-mono text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase z-30 flex items-center gap-4">
+      <span className="text-zinc-500">NO.</span>
+      <span className={dark ? 'text-[#E5FF00]' : 'text-black'}>00{pageNum}</span>
+    </div>
+    
+    {/* 底部箭头 */}
+    <div className="absolute bottom-8 right-12 md:bottom-12 md:right-16 text-xl md:text-3xl font-light z-30 mix-blend-difference text-white animate-bounce">
+      ↓
+    </div>
+  </section>
+);
+
+export default function App() {
+  return (
+    <div className="h-screen w-full bg-[#0a0a0a] text-white font-sans selection:bg-[#E5FF00] selection:text-black overflow-y-scroll snap-y snap-mandatory custom-scrollbar relative">
+      
+      {/* 全局胶片噪点遮罩 (提升高级感的核心) */}
+      <div className="pointer-events-none fixed inset-0 z-50 opacity-[0.04] mix-blend-overlay">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+          <filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/></filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+        </svg>
+      </div>
+      
+      {/* PAGE 1: 巨型封面 (描边与实心交错) */}
+      <Slide pageNum="1" title="THONG JIN HUI // 2026">
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <SharpStar className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vh] h-[80vh] text-[#E5FF00] opacity-10 animate-[spin_40s_linear_infinite]" outlined={true} />
+          
+          <h1 className="text-[20vw] md:text-[18vw] font-black tracking-tighter uppercase leading-[0.75] z-10 flex flex-col items-center">
+            <span className="text-transparent relative w-full text-left ml-[10vw]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.8)' }}>PORT</span>
+            <span className="text-[#E5FF00] relative w-full text-right mr-[10vw]">FOLIO</span>
+          </h1>
+          <p className="mt-12 font-mono text-xs md:text-sm tracking-[0.5em] text-zinc-400 uppercase mix-blend-difference">
+            Visual Storytelling & Brutalism
+          </p>
+        </div>
+
+        {/* 底部跑马灯 */}
+        <div className="absolute bottom-24 w-full overflow-hidden border-y border-zinc-800 py-2 bg-[#E5FF00]/10 flex z-20">
+           <div className="animate-marquee whitespace-nowrap font-mono text-xs tracking-widest text-[#E5FF00]">
+             [ EXPERIMENTAL PHOTOGRAPHY ] /// [ THONG JIN HUI ] /// [ 2026 EXCLUSIVE ARCHIVE ] /// [ EXPERIMENTAL PHOTOGRAPHY ] /// [ THONG JIN HUI ] /// [ 2026 EXCLUSIVE ARCHIVE ] /// 
+             [ EXPERIMENTAL PHOTOGRAPHY ] /// [ THONG JIN HUI ] /// [ 2026 EXCLUSIVE ARCHIVE ] /// 
+           </div>
+        </div>
+      </Slide>
+
+      {/* PAGE 2: About Me (极简画廊风格) */}
+      <Slide pageNum="2">
+        <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-12 px-6 md:px-20 items-center">
+          <div className="md:col-span-5 relative h-[50vh] md:h-[70vh] group overflow-hidden">
+            <div className="absolute inset-0 bg-[#E5FF00] mix-blend-color opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"></div>
+            <img 
+              src="https://images.unsplash.com/photo-1618090584126-129cd1d3f2ec?auto=format&fit=crop&w=800&q=80" 
+              alt="Artistic profile" 
+              className="w-full h-full object-cover grayscale contrast-150 group-hover:scale-105 transition-transform duration-1000" 
+            />
+            {/* 照片上的排版标签 */}
+            <div className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[0.2em] bg-black text-white px-2 py-1 z-20">FIG 01.</div>
+          </div>
+          
+          <div className="md:col-span-1"></div>
+
+          <div className="md:col-span-6 flex flex-col justify-center py-10 md:py-0 relative">
+            <div className="absolute -left-10 top-0 h-full w-[1px] bg-zinc-800 hidden md:block"></div>
+            <p className="font-mono text-xs tracking-[0.4em] text-[#E5FF00] mb-4">IDENTIFICATION</p>
+            <h2 className="text-6xl md:text-[7vw] font-black uppercase tracking-tighter leading-[0.85] mb-8">
+              About<br/>Me
+            </h2>
+            <div className="w-16 h-[2px] bg-white mb-8"></div>
+            <h3 className="text-2xl font-bold uppercase mb-4 tracking-widest">THONG JIN HUI</h3>
+            <p className="text-zinc-400 font-mono text-[10px] md:text-xs tracking-widest uppercase mb-8 border border-zinc-800 inline-block px-3 py-1">3 Years Exp. // Lead Vision</p>
+            <p className="text-zinc-400 leading-relaxed text-sm md:text-base font-medium max-w-lg tracking-wide">
+              剥离多余的修饰，专注于纯粹的光影切割与极致的几何构图。以粗野主义美学为核心，用镜头解构现实空间，创造出具有极强侵略性与高级时尚感的视觉档案。
+            </p>
+          </div>
+        </div>
+      </Slide>
+
+      {/* PAGE 3: My Experience (巨大的数字与精准对齐) */}
+      <Slide pageNum="3">
+        <div className="absolute inset-0 px-6 md:px-20 flex flex-col justify-center">
+          <div className="flex flex-col md:flex-row gap-12 md:gap-24">
+            <div className="md:w-1/3 relative z-10">
+               <h2 className="text-6xl md:text-[8vw] font-black uppercase tracking-tighter leading-[0.85]">
+                 <span className="text-transparent" style={{ WebkitTextStroke: '2px #E5FF00' }}>MY</span><br/>
+                 CAREER<br/>
+                 PATH
+               </h2>
+               <SharpStar className="w-32 h-32 text-[#E5FF00] absolute -right-16 bottom-0 animate-[spin_10s_linear_infinite]" />
+            </div>
+            
+            <div className="md:w-2/3 flex flex-col justify-center gap-10 md:gap-16 border-l border-zinc-800 pl-8 md:pl-16 relative">
+              {/* 经历 1 */}
+              <div className="relative group">
+                <div className="absolute -left-[33px] md:-left-[65px] top-2 w-2 h-2 bg-[#E5FF00] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="font-mono text-xs tracking-[0.3em] text-[#E5FF00] mb-2">2020 — 2023</div>
+                <h4 className="text-2xl md:text-3xl font-black uppercase mb-3 tracking-tighter group-hover:text-[#E5FF00] transition-colors">Fradel & Spies</h4>
+                <p className="text-zinc-500 text-xs md:text-sm tracking-wide uppercase max-w-md">
+                  Studio Assistant & Junior Photographer. 奠定布光与影棚工业级标准。
+                </p>
+              </div>
+              
+              {/* 经历 2 */}
+              <div className="relative group">
+                <div className="absolute -left-[33px] md:-left-[65px] top-2 w-2 h-2 bg-[#E5FF00] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="font-mono text-xs tracking-[0.3em] text-[#E5FF00] mb-2">2023 — 2025</div>
+                <h4 className="text-2xl md:text-3xl font-black uppercase mb-3 tracking-tighter group-hover:text-[#E5FF00] transition-colors">Giggling Platypus</h4>
+                <p className="text-zinc-500 text-xs md:text-sm tracking-wide uppercase max-w-md">
+                  Senior Photographer. 专注于高对比度黑白产品与街头纪实摄影的实验。
+                </p>
+              </div>
+
+              {/* 经历 3 */}
+              <div className="relative group">
+                <div className="absolute -left-[33px] md:-left-[65px] top-2 w-2 h-2 bg-[#E5FF00] rounded-full opacity-100"></div>
+                <div className="font-mono text-xs tracking-[0.3em] text-white mb-2">2025 — PRESENT</div>
+                <h4 className="text-2xl md:text-3xl font-black uppercase mb-3 tracking-tighter text-[#E5FF00]">Ingoude Company</h4>
+                <p className="text-zinc-500 text-xs md:text-sm tracking-wide uppercase max-w-md">
+                  Lead Visual Director. 确立品牌“霓虹粗野主义”视觉核心，主导全部创意大片。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Slide>
+
+      {/* PAGE 4: Style & Focus (反差色悬停折叠菜单效果) */}
+      <Slide pageNum="4" dark={false} title="FOCUS AREAS // 2026">
+        <div className="absolute inset-0 pt-24 pb-20 flex flex-col justify-center">
+          <div className="px-6 md:px-20 mb-10">
+            <h2 className="text-[6vw] font-black uppercase tracking-tighter leading-none mix-blend-exclusion text-white">Style & Focus</h2>
+            <p className="font-mono text-xs tracking-[0.2em] mt-4 max-w-xl font-bold">
+              OBSESSIVE FOCUS ON EXTREME LIGHTING, HARSH GEOMETRY, AND EMOTIONAL RAWNESS.
+            </p>
+          </div>
+
+          {/* 全宽列表式导航菜单 */}
+          <div className="flex flex-col border-y border-black font-black uppercase tracking-tighter text-5xl md:text-7xl lg:text-[7vw]">
+            {['Fashion', 'Street', 'Product', 'Wedding'].map((item, idx) => (
+              <div key={idx} className="border-b border-black last:border-b-0 px-6 md:px-20 py-4 md:py-6 hover:bg-black hover:text-[#E5FF00] hover:pl-10 md:hover:pl-32 transition-all duration-500 cursor-pointer flex justify-between items-center group">
+                <span>{item}</span>
+                <span className="font-mono text-sm tracking-[0.3em] font-normal opacity-0 group-hover:opacity-100 transition-opacity">VIEW ARCHIVE →</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Slide>
+
+      {/* PAGE 5: 高级感照片档案网格 */}
+      <Slide pageNum="5">
+        <div className="absolute inset-0 pt-24 pb-20 px-6 md:px-20">
+          <div className="w-full h-full grid grid-cols-2 md:grid-cols-4 grid-rows-4 md:grid-rows-2 gap-4">
+            
+            <div className="col-span-2 row-span-2 bg-zinc-900 overflow-hidden relative group">
+              <img src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?auto=format&fit=crop&w=1200&q=80" className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700" alt="img" />
+              <div className="absolute top-4 left-4 font-mono text-[10px] bg-white text-black px-2 uppercase mix-blend-screen">01 / Fashion</div>
+            </div>
+            
+            <div className="col-span-1 row-span-1 bg-zinc-900 overflow-hidden relative group border border-zinc-800">
+               <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80" className="w-full h-full object-cover grayscale contrast-150 group-hover:grayscale-0 transition-all duration-700" alt="img" />
+            </div>
+
+            <div className="col-span-1 row-span-2 bg-[#E5FF00] overflow-hidden relative flex flex-col items-center justify-center text-black p-6 text-center">
+               <SharpStar className="w-16 h-16 mb-6" />
+               <h3 className="font-black uppercase tracking-tighter text-2xl mb-2">Selected Works</h3>
+               <p className="font-mono text-[10px] tracking-widest uppercase">Archive 2026</p>
+            </div>
+
+            <div className="col-span-1 row-span-1 bg-zinc-900 overflow-hidden relative group border border-zinc-800">
+               <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" className="w-full h-full object-cover grayscale contrast-150 group-hover:grayscale-0 transition-all duration-700" alt="img" />
+            </div>
+            
+          </div>
+        </div>
+      </Slide>
+
+      {/* PAGE 7: 项目展示 (高级图文混排) */}
+      <Slide pageNum="7">
+        <div className="absolute inset-0 flex flex-col md:flex-row px-6 md:px-20 pt-24 pb-20 items-center justify-center gap-12 md:gap-24">
+          
+          <div className="w-full md:w-1/2 order-2 md:order-1 relative">
+            <h2 className="text-[12vw] md:text-[8vw] font-black uppercase tracking-tighter leading-none text-transparent absolute -top-10 md:-top-20 -left-4 md:-left-10 z-0" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.1)' }}>
+              PRJ_01
+            </h2>
+            <div className="relative z-10 space-y-10">
+              <div>
+                <p className="font-mono text-[10px] tracking-[0.3em] text-[#E5FF00] mb-2 uppercase border-b border-zinc-800 pb-2">Project Type</p>
+                <h3 className="text-3xl font-black uppercase tracking-tighter">Concrete & Geometry</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <p className="font-mono text-[10px] tracking-[0.3em] text-[#E5FF00] mb-2 uppercase border-b border-zinc-800 pb-2">Background</p>
+                  <p className="text-zinc-400 text-xs leading-relaxed tracking-wide text-justify">
+                    解构现代主义建筑的冰冷立面，利用极端的阴影与几何线条，将城市森林转化为抽象的黑白视觉符号。强调压迫感与秩序感。
+                  </p>
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] tracking-[0.3em] text-[#E5FF00] mb-2 uppercase border-b border-zinc-800 pb-2">Client Goal</p>
+                  <p className="text-zinc-400 text-xs leading-relaxed tracking-wide text-justify">
+                    为先锋独立设计杂志《A/B》提供核心跨页摄影大片，传递极简而震撼的编辑态度。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full md:w-1/2 order-1 md:order-2 h-[40vh] md:h-[60vh] relative p-4 border border-zinc-800 group">
+             <Crosshair className="top-0 left-0 text-[#E5FF00]" />
+             <Crosshair className="bottom-0 right-0 text-[#E5FF00]" />
+             <div className="w-full h-full bg-zinc-900 overflow-hidden relative">
+               <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80" alt="Architecture" className="w-full h-full object-cover grayscale contrast-200 group-hover:scale-110 transition-transform duration-1000" />
+             </div>
+          </div>
+        </div>
+      </Slide>
+
+      {/* PAGE 11 & 12: Contact & Thank You (极端放大与压迫感) */}
+      <Slide pageNum="11">
+        <div className="absolute inset-0 flex flex-col justify-between pt-24 pb-12 px-6 md:px-12">
+          
+          <div className="flex-1 flex flex-col justify-center">
+            <h2 className="text-[12vw] font-black uppercase tracking-tighter leading-[0.8] mb-12 mix-blend-difference">
+              LET'S WORK<br/>
+              <span className="text-transparent" style={{ WebkitTextStroke: '2px #E5FF00' }}>TOGETHER</span>
+            </h2>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] border-y border-zinc-800 py-8">
+              <div className="flex flex-col gap-2 group">
+                 <span className="text-zinc-600">PHONE</span>
+                 <span className="group-hover:text-[#E5FF00] transition-colors cursor-pointer text-white text-sm">123-456-7890</span>
+              </div>
+              <div className="flex flex-col gap-2 group">
+                 <span className="text-zinc-600">WEB</span>
+                 <span className="group-hover:text-[#E5FF00] transition-colors cursor-pointer text-white text-sm">REALLYGREATSITE.COM</span>
+              </div>
+              <div className="flex flex-col gap-2 group">
+                 <span className="text-zinc-600">SOCIAL</span>
+                 <span className="group-hover:text-[#E5FF00] transition-colors cursor-pointer text-white text-sm">@REALLYGREATSITE</span>
+              </div>
+              <div className="flex flex-col gap-2 group">
+                 <span className="text-zinc-600">STUDIO</span>
+                 <span className="group-hover:text-[#E5FF00] transition-colors cursor-pointer text-white text-sm">123 ANYWHERE ST, NY</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full text-center overflow-hidden h-24 relative">
+             <h1 className="text-[15vw] font-black uppercase tracking-tighter leading-none text-zinc-900 absolute -bottom-4 w-full text-center left-0 right-0 pointer-events-none">
+               THANK YOU
+             </h1>
+          </div>
+        </div>
+      </Slide>
+
+      {/* 全局自定义滚动条及动画样式 */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 0px;
+          display: none;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          display: inline-block;
+          animation: marquee 20s linear infinite;
+        }
+      `}} />
+    </div>
+  );
+}
