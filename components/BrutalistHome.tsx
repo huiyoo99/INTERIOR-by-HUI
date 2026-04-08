@@ -129,12 +129,17 @@ export default function BrutalistHome() {
       animationFrameId = requestAnimationFrame(render);
     };
 
+    let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }, 150); // 防抖处理，避免 resize 时卡顿
     };
     window.addEventListener('resize', handleResize);
-    handleResize();
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     animationFrameId = requestAnimationFrame(render);
 
@@ -186,11 +191,11 @@ export default function BrutalistHome() {
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
           <SharpStar className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vh] h-[80vh] text-[#E5FF00] opacity-10 animate-[spin_40s_linear_infinite]" outlined={true} />
 
-          <h1 className="text-[15vw] md:text-[12vw] font-black tracking-tighter uppercase leading-[0.8] z-10 flex flex-col items-center whitespace-nowrap text-center">
-            <span className="text-transparent relative w-full text-left" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.8)' }}>
+          <h1 className={`font-black tracking-tighter uppercase leading-[0.8] z-10 w-full px-4 text-center ${language === 'zh' ? 'text-[18vw] md:text-[14vw]' : 'text-[16vw] md:text-[11vw] lg:text-[10vw]'}`}>
+            <span className="text-transparent relative w-full block whitespace-normal break-words text-left" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.8)' }}>
               {t.hero.title1 as string}
             </span>
-            <span className="text-[#E5FF00] relative w-full text-right block mt-2">
+            <span className="text-[#E5FF00] relative w-full block whitespace-normal break-words text-right mt-2">
               {t.hero.title2 as string}
             </span>
           </h1>

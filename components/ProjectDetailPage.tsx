@@ -117,11 +117,11 @@ const ProjectDetailPage: React.FC = () => {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <SharpStar className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vh] h-[80vh] text-[#E5FF00] opacity-10 animate-[spin_40s_linear_infinite]" outlined={true} />
           
-          <h1 className="text-[18vw] md:text-[14vw] font-black tracking-tighter uppercase leading-[0.8] z-10 flex flex-col items-center whitespace-nowrap">
-            <span className="text-transparent relative w-full text-left ml-[5vw]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.8)' }}>
+          <h1 className={`font-black tracking-tighter uppercase leading-[0.8] z-10 w-full px-4 text-center ${language === 'zh' ? 'text-[20vw] md:text-[15vw]' : 'text-[18vw] md:text-[12vw] lg:text-[10vw]'}`}>
+            <span className="text-transparent relative w-full block whitespace-normal break-words text-left ml-[5vw]" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.8)' }}>
               {title1 || 'PRO'}
             </span>
-            <span className="text-[#E5FF00] relative w-full text-right mr-[5vw]">
+            <span className="text-[#E5FF00] relative w-full block whitespace-normal break-words text-right mr-[5vw]">
               {title2 || 'JECT'}
             </span>
           </h1>
